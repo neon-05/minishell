@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/07 15:28:37 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:17:09 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ t_token	*parse(char **envp, char *rl)
 	if (!split)
 		return(NULL);
 	lst = list_const(envp, split);
-	return (ft_free_arr(split, arr_size(split)), lst);
+	return (ft_free_arr((void **) split, arrlen((void **) split)), lst);
 }

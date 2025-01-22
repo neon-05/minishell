@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:52:31 by malapoug          #+#    #+#             */
-/*   Updated: 2024/12/31 10:50:18 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:24:43 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**ft_split(const char *s, char c)
 		arr[i] = ft_malloc_w((char *)s, c);
 		if (!arr[i])
 		{
-			ft_free_arr(arr, i);
+			ft_free_arr((void **) arr, i);
 			return (NULL);
 		}
 		i++;

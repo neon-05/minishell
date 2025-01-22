@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:41:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/07 15:28:25 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:42:45 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft/libft.h"
+# include <libft.h>
 # include "colors.h"
 
 //====================(DEFINES)=============================//
@@ -49,7 +49,7 @@ t_token	*parse(char **envp, char *rl);
 char	**tokenize(char *rl);
 
 //parser_utils
-char	**list_insert(char **lst1, char **lst2, int n);
+char	**list_insert(char **lst1, char **lst2, size_t n);
 void	duck_fishing(char **split, int i);
 int		count_occ(char *str, int c);
 int		total_occ(char **split, int c);
@@ -67,6 +67,9 @@ void	free_t_token(t_token *head);
 
 //debug
 void	show_arr(char **arr);
+
+//vars
+int	ismetachar(int c);
 
 //====================(COLORS)==============================//
 

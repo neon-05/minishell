@@ -1,63 +1,62 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/09 00:28:46 by malapoug          #+#    #+#              #
-#    Updated: 2025/01/06 18:56:56 by malapoug         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-NAME = minishell
-
 CC = cc
 
 DEBUG = -fsanitize=address
 
-CFLAGS = -Wall -Wextra -Werror
-
-SRCS =	main.c\
-	envp.c\
-	prompt.c\
-	parsing/parser.c\
-	parsing/parser_utils.c\
-	parsing/tokenizer.c\
-	parsing/tokenizer_utils.c\
-	minishell_clean.c\
-	debug.c\
-
-OBJS = $(SRCS:.c=.o)
+CFLAGS = -Wall -Wextra -Werror -I$(LIB) -I/usr/include
+LFLAGS = -lreadline -L$(LIB)
 
 RM = rm -f
 
+NAME = minishell
+LIB = libft
+
+SRCS = \
+	main.c \
+	envp.c \
+	prompt.c \
+	parsing/parser.c \
+	parsing/parser_utils.c \
+	parsing/tokenizer.c \
+	parsing/tokenizer_utils.c \
+	minishell_clean.c \
+	debug.c \
+
+DSRC = \
+	vars.c \
+	minishell_utils.c \
+
+OBJS = $(SRCS:.c=.o)
+DOBJ = $(DSRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@make -C libft/
-	@$(CC) $(CFLAGS) $(OBJS) libft/libft.a -lreadline -o $(NAME)
-	@echo $(NAME)" compiled!\n"
+$(NAME): $(OBJS) $(LIB)
+	$(CC) $(OBJS) $(LIB)/libft.a $(LFLAGS) -o $(NAME)
+	@echo $(NAME)" compiled!"
 
-debug: $(OBJS)
-	@make -C libft/
-	@$(CC) $(CFLAGS) $(DEBUG) $(OBJS) libft/libft.a  -lreadline -o $(NAME)
-	@echo $(NAME)" compiled with debug!\n"
+debug: $(OBJS) $(LIB)
+	$(CC) $(DEBUG) $(OBJS) $(LIB)/libft.a $(LFLAGS) -o $(NAME)
+	@echo $(NAME)" compiled with address sanitizer!"
+
+vars: $(OBJS) $(DOBJ) $(LIB)
+	$(CC) $(DOBJ) $(LIB)/libft.a $(LFLAGS) -o vars
+
+$(LIB):
+	$(MAKE) -C $(LIB)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -I/usr/include -lreadline -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 
 clean:
-	@make clean -C libft/
-	@$(RM) $(OBJS)
+	$(MAKE) clean -C $(LIB)
+	$(RM) $(OBJS)
 
 fclean: clean
-	@make fclean -C libft/
-	@$(RM) $(NAME)
+	$(MAKE) fclean -C $(LIB)
+	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re $(LIB)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:24:35 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/06 18:58:15 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:06:19 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	rl = NULL;
 	pr = prompt(envp);
-	while (!ft_strnstr(rl, "exit", ft_strlen(rl)))// voir comment faire avec exceve pour "exit"
+	while (!ft_strnstr(rl, "exit", ft_strlen(rl)))// voir comment faire avec exceve pour les builitins
 	{
 		free(rl);
 		rl = readline(pr);

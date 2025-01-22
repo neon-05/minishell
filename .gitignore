@@ -1,0 +1,6 @@
+**/**.o
+libft/libft.a
+minishell
+valgrind.log
+vars
+a.out

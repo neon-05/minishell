@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/06 17:44:45 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:21:21 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	check_quotes(char **split, int c)
 	int		i;
 	int		count;
 
-	size = arr_size(split);
+	size = arrlen((void **) split);
 	i = 0;
 	while (i <= size)
 	{
@@ -84,18 +84,18 @@ int	check_quotes(char **split, int c)
 	return (1);
 }
 
-char	**list_insert(char **lst1, char **lst2, int n)
+char	**list_insert(char **lst1, char **lst2, size_t n)
 {
 	char	**new;
 	int		size;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	if (!lst1 || !lst2)
 		return (NULL);
-	if (n >= arr_size(lst1))
+	if (n >= arrlen((void **) lst1))
 		return (NULL);
-	size = arr_size(lst1) - 1 + arr_size(lst2);
+	size = arrlen((void **) lst1) - 1 + arrlen((void **) lst2);
 	new = malloc((size + 1) * sizeof(char *));
 	if (!new)
 		return (NULL);
@@ -108,6 +108,6 @@ char	**list_insert(char **lst1, char **lst2, int n)
 	while (lst1[n + 1])
 		new[j + i++] = ft_strdup(lst1[n++ + 1]);
 	new[i + j] = NULL;
-	ft_free_arr(lst2, arr_size(lst2));
-	return (ft_free_arr(lst1, arr_size(lst1)), new);
+	ft_free_arr((void **) lst2, arrlen((void **) lst2));
+	return (ft_free_arr((void **) lst1, arrlen((void **) lst1)), new);
 }

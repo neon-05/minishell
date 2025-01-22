@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 19:07:06 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/02 13:05:45 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:47:57 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 
-//Bonnus
+//Bonus
 typedef struct s_list
 {
 	void			*content;
@@ -71,10 +71,9 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 //Ajouts
 char	*ft_strjoin_f(char *dst, char *src);
-void	ft_free_arr(char **arr, int i);
-void	ft_free_arr_i(int **arr, int i);
-int		arr_size(char **arr);
-int		arr_size_i(int **arr);
+void	ft_free_arr(void **arr, size_t i);
+size_t	arrlen(void **arr);
+size_t	arrnlen(void **arr, size_t n);
 char	**ft_split_let(char const *s, char c);
 
 #endif

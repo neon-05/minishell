@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_utils.c                                  :+:      :+:    :+:   */
+/*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 13:45:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/05 14:09:38 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:16:18 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check21(char **args, char *path)
 	if (!args && path)
 		free(path);
 	if (!path && args)
-		ft_free_arr(args, arr_size(args));
+		ft_free_arr((void **) args, arrlen((void **) args));
 	if (!args || !path)
 		return (0);
 	return (1);
@@ -77,7 +77,7 @@ char	*get_path(char **envp, char *cmd)
 		temp = ft_strjoin(paths[i], "/");
 		cmd_path = ft_strjoin(temp, cmd);
 		if (!check11(temp, cmd_path))
-			return (ft_free_arr(paths, arr_size(paths)), NULL);
+			return (ft_free_arr((void **) paths, arrlen((void **) paths)), NULL);
 		free(temp);
 		if (access(cmd_path, X_OK) == 0)
 			break ;
@@ -85,6 +85,6 @@ char	*get_path(char **envp, char *cmd)
 		cmd_path = NULL;
 		i++;
 	}
-	ft_free_arr(paths, arr_size(paths));
+	ft_free_arr((void **) paths, arrlen((void **) paths));
 	return (cmd_path);
 }

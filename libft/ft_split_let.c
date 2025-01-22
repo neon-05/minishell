@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_let.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 12:47:14 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/02 13:04:31 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:25:06 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**ft_split_let(const char *s, char c)
 				s++;
 		}
 		if (!arr[i - 1])
-			return (ft_free_arr(arr, i), NULL);
+			return (ft_free_arr((void **) arr, i), NULL);
 	}
 	arr[i] = NULL;
 	return (arr);

@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 19:07:06 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/14 18:47:57 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:46:35 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 //Ajouts
 char	*ft_strjoin_f(char *dst, char *src);
-void	ft_free_arr(void **arr, size_t i);
+void	freenarr(void **arr, size_t i);
+void	freearr(void **arr);
 size_t	arrlen(void **arr);
 size_t	arrnlen(void **arr, size_t n);
 char	**ft_split_let(char const *s, char c);

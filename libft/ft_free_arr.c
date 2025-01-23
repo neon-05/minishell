@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 12:42:07 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/22 17:01:50 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:45:38 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,15 @@ size_t	arrnlen(void **arr, size_t n)
 	return (i);
 }
 
-void	ft_free_arr(void **arr, size_t i)
+void	freenarr(void **arr, size_t i)
 {
 	while (i > 0)
 		free(arr[--i]);
 	free(arr);
+}
+
+/* assumes array is null-terminated */
+void	freearr(void **arr)
+{
+	freenarr(arr, arrlen(arr));
 }

@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "minishell.h"
 
-size_t	getvarid(const char *var, size_t vlen, char **vars);
-char	*getvar(const char *var, size_t vlen, char **vars);
+size_t	getvarid(const char *name, size_t l, char **vars);
+char	*getvar(const char *name, char **vars);
 size_t	addvar(char ***vars);
 int		setvar(char ***vars, char const *var);
-char	*format(char **s, char **vars);
+char	*format(char const *s, char **vars);
 size_t	idlen(char const *s);
 
 void	print_arr(char **arr, char *name)
@@ -32,25 +32,30 @@ size_t	idlen(char const *s)
 	return (i);
 }
 
-size_t	getvarid(const char *var, size_t vlen, char **vars)
+size_t	getvarid(const char *var, size_t l, char **vars)
 {
 	size_t	i;
 
 	i = 0;
-	while (vars[i] && (ft_strncmp(vars[i], var, vlen) || vars[i][vlen] != '='))
+	while (vars[i] && (ft_strncmp(vars[i], var, l) || vars[i][l] != '='))
 		i++;
 	return (i);
 }
 
-char	*getvar(const char *var, size_t vlen, char **vars)
+char	*getvar(const char *name, char **vars)
 {
 	size_t	i;
+	size_t	l;
+	char	*r;
 
-	i = getvarid(var, vlen, vars);
+	r = getenv(name);
+	if (r)
+		return (r);
+	l = idlen(name);
+	i = getvarid(name, l, vars);
 	if (vars[i])
-		return (vars[i] + vlen + 1);
-	else
-		return (NULL);
+		r = vars[i] + l + 1;
+	return (r);
 }
 
 int	setvar(char ***vars, char const *var)
@@ -79,6 +84,43 @@ int	setvar(char ***vars, char const *var)
 	return (0);
 }
 
+char	*format(char const *s, char **vars)
+{
+	size_t	newlen;
+	size_t	start;
+	size_t	i;
+	char	*new;
+
+	newlen = 0;
+	i = 0;
+	while (s[i])
+	{
+		start = i;
+		while (s[i] && s[i] != '$')
+			i++;
+		newlen += i - start;
+		i += (s[i] == '$');
+		if (s[i])
+			newlen += ft_strlen(getvar(s + i, vars));
+		i += idlen(s + i);
+	}
+	new = malloc(newlen);
+	if (!new)
+		return (NULL);
+	*new = '\0';
+	printf("%li\n", newlen);
+	i = 0;
+	while (s[i])
+	{
+		start = i;
+		while (s[i] && s[i] != '$')
+			i++;
+		i += (s[i] == '$');
+		ft_strlcat(new, s + start, i + 1 - start);
+	}
+	return (new);
+}
+
 size_t	addvar(char ***vars)
 {
 	size_t	i;
@@ -98,7 +140,7 @@ size_t	addvar(char ***vars)
 	return (i);
 }
 
-int main(int argc, char const *argv[], char **envp)
+int main(int argc, char const *argv[])
 {
 	int			i;
 	char const	*s;
@@ -117,18 +159,21 @@ int main(int argc, char const *argv[], char **envp)
 	s = argv[i];
 	if (s[0] == '$')
 	{
-		p = getenv(s + 1);
-		if (!p)
-			p = getvar(s + 1, idlen(s + 1), vars);
+		p = getvar(s + 1, vars);
 		if (p)
 			printf("%s\n", p);
 	}
 	else if (s[idlen(s)] == '=')
 		setvar(&vars, s);
-	i++;
-	print_arr(vars, "vars");
+	else if (s[0] == '/')
+	{
+		p = format(s, vars);
+		printf("%s\n", p);
+		free(p);
 	}
-	ft_free_arr((void **) vars, arrlen((void **) vars));
-	envp++;
+	print_arr(vars, "vars");
+	i++;
+	}
+	freearr((void **) vars);
 	return (0);
 }

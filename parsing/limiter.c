@@ -1,0 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   limiter.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/24 19:15:25 by malapoug          #+#    #+#             */
+/*   Updated: 2025/02/24 19:37:13 by malapoug         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+int	get_line(char **line)
+{
+	char	*buffer;
+	char	c;
+	int		bytes;
+	int		i;
+
+	i = 0;
+	buffer = (char *)malloc(sizeof(char) * 50);
+	if (!buffer)
+		return (-1);
+	bytes = read(0, &c, 1);
+	while (bytes && c != '\n')
+	{
+		if (c != '\n')
+			buffer[i] = c;
+		i++;
+		bytes = read(0, &c, 1);
+	}
+	buffer[i] = '\n';
+	buffer[++i] = '\0';
+	*line = buffer;
+	return (bytes);
+}
+
+int	limiter(char *limiter, int ac)
+{
+	int		fd;
+	char	*line;
+
+
+	fd = open("./this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_WRONLY, 0777);//verifier que ca marche selon les droits
+	while (get_line(&line))
+	{
+		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)//gerer cat << lim ==>    limiter marchera
+			return (free(line), 1);
+		free(line);
+	}
+	return (1);
+}
+
+
+
+
+
+
+
+//1 ==> open temp_file
+//2 ==> write limiter_content
+//3 ==> close temp_file
+//4 ==> replace "cat << eof" by "cat temp_file"
+//5 ==> add temp_file to struct->file_to_delete
+//5 ==> exec / process
+//6 ==> unlink (path/temp_file)

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 19:15:25 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/24 21:23:16 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:45:49 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@ int	get_line(char **line)
 	return (bytes);
 }
 
-int	limiter(char *limiter, int ac)
+int	limiter(char *limiter)
 {
 	int		fd;
 	char	*line;
 
 
-	fd = open("./this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_WRONLY, 0777);//verifier que ca marche selon les droits de l'executable
+	fd = open("./this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY, 0777);//verifier que ca marche selon les droits de l'executable
 	if (fd < 0)
 		return (printf("Error opening files of LIMITER\n"), 0);
 	while (get_line(&line))
 	{
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)//	/!\ gerer cat << lim ==>    limiter marchera
+		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)//	!!! gerer cat << lim ==>    limiter marchera
 			return (free(line), close(fd), 1);
 		write(fd, line, ft_strlen(line));
 		free(line);

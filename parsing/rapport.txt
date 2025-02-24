@@ -1,0 +1,44 @@
+
+
+
+This is a file where i put the exemples of what is missing or need to be fixed/upgraded
+
+
+
+
+
+
+
+
+cat << EOF | wc -l >> out        =========>>            cat	<<	EOF	|	wc	-l	>>	out			✓
+
+
+└─[test]─> cat << "$HOME"
+/home/l			<=== no stop here				!!!
+$HOME			<=== stop here
+/home/l
+
+
+
+
+└─[test]─> cat << $
+hello											!!! WORKING
+$			<=== stop here
+
+
+
+
+┌─[l]~[/home/l/42/test]~o
+└─O cat << lim1 << lim2
+hello
+lim1
+world
+lim2
+cat	this_is_a_temporary_file_for_the_eof	this_is_a_temporary_file_for_the_eof	<== out
+
+Suposed to be in this_is_a_temporary_file_for_the_eof:
+hello
+world
+
+Is in this_is_a_temporary_file_for_the_eof:
+world

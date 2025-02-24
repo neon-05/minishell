@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:41:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/24 21:12:33 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:18:39 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ char	**parse(char **envp, char *rl);
 
 //tokenizer
 char	**tokenize(char *rl);
+
+//limiter
+int	limiter(char *limiter);
 
 //parser_utils
 char	**list_insert(char **lst1, char **lst2, int n);

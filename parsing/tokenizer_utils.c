@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/24 17:31:20 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:30:51 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,11 @@ char	**list_insert(char **lst1, char **lst2, int n)
 	i = -1;
 	j = -1;
 	while (++i < n)
-		new[i] = ft_strdup(lst1[i]);
+		new[i] = ft_strdup(lst1[i]);//check
 	while (lst2[++j])
-		new[i + j] = ft_strdup(lst2[j]);
+		new[i + j] = ft_strdup(lst2[j]);//check
 	while (lst1[n + 1])
-		new[j + i++] = ft_strdup(lst1[n++ + 1]);
+		new[j + i++] = ft_strdup(lst1[n++ + 1]);//check
 	new[i + j] = NULL;
 	ft_free_arr(lst2, arr_size(lst2));
 	return (ft_free_arr(lst1, arr_size(lst1)), new);

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/24 17:31:01 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:54:37 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,3 @@ char	**tokenize(char *rl)
 }
 // ^^^^^ checker partout ^^^^^
 
-
-/*
- * 		in << EOF | wc -l >> out        =========>>            in	<<	EOF	|	wc	-l	>>	out			✓
-*/

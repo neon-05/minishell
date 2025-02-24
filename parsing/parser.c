@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/24 17:37:13 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:27:08 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ char	**parse(char **envp, char *rl)
 	if (!split)
 		return (NULL);
 	split = handle_env(envp, split);
+	if (!split)
+		return (printf("Error while handling env vars"), NULL);
+	split = handle_redirections(envp, split);
+	if (!split)
+		return (printf("Error while handling redirections"), NULL);
 	show_arr(split);
 	return (split);
 }

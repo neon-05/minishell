@@ -1,27 +1,8 @@
 
+|=======================================================================================|
+|This is a file where i put the exemples of what is missing or need to be fixed/upgraded|
+|=======================================================================================|
 
-
-This is a file where i put the exemples of what is missing or need to be fixed/upgraded
-
-
-need to handle:		< debug.c cat minishell.h		<=== it print the minishell.h file
-need to handle:		< debug.c cat					<=== it print the debug.c file
-
--------------------------------------------------------------------------------------------------
-
-
-cat << EOF | wc -l >> out        =========>>            cat	<<	EOF	|	wc	-l	>>	out			✓
-
-
-└─[test]─> cat << "$HOME"
-/home/l			<=== no stop here																!!!
-$HOME			<=== stop here
-/home/l
-
-┌─[l i@ frigo][ parsing][!?][C v14.2.1-gcc]
-└─[minishell_parsing]─> cat << $HOME
-$HOME			<=== should have stop here
-/home/l			<=== but stoped here
 
 
 -------------------------------------------------------------------------------------------------
@@ -49,3 +30,44 @@ world
 
 Is in this_is_a_temporary_file_for_the_eof:
 world
+
+
+-------------------------------------------------------------------------------------------------
+--------------------------------------------DONE-------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+cat << EOF | wc -l >> out        =========>>            cat	<<	EOF	|	wc	-l	>>	out			✓
+
+
+┌─[l]~[/home/l/42/minishell_parsing]~o
+└─O  < infile cat | wc -l >> outfile
+
+IN T_PARSED** :
+
+INFILE:
+infile
+
+OUTFILE:																						✓
+outfile
+
+OUT_MODE:
+O_APPEND
+
+STR:
+cat	|	wc	-l
+
+
+-------------------------------------------------------------------------------------------------
+
+
+└─[test]─> cat << "$HOME"
+/home/l			<=== no stop here
+$HOME			<=== stop here
+/home/l
+																								✓
+┌─[l]@ frigo][ parsing][!?][C v14.2.1-gcc]
+└─[minishell_parsing]─> cat << $HOME
+$HOME			<=== should have stop here
+/home/l			<=== but stoped here
+
+

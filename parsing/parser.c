@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 15:50:31 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:01:25 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ char	**handle_env(char **envp, char **split)
 	path = NULL;
 	while (split[++i])
 	{
-		if (ft_strlen(ft_strchr(split[i], '$')) == 1 && ft_strnstr(ft_strchr(split[i], '$') + 1, "$$", 2) != 0)//a faire
-			path = get_envp(envp, "BASHPID=");
+//		if (ft_strlen(ft_strchr(split[i], '$')) == 1 && ft_strnstr(ft_strchr(split[i], '$') + 1, "$$", 2) != 0)//a faire
+//			path = get_envp(envp, "BASHPID=");
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
 			split[i] = ft_strtrim(split[i], "\"");//leaks
+			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3))
+				break ;
 			path = get_envp(envp, ft_strchr(split[i], '$') + 1) + 1;
 			if (find_envp(envp, ft_strchr(split[i], '$') + 1) == arr_size(envp))
 				temp = replace_var(split[i], "");//free path
@@ -102,7 +104,8 @@ char	**handle_redirections(char **split)
 char	**parse(char **envp, char *rl)
 {
 
-	char	**split;
+	char		**split;
+	t_parsed	*parsed;
 
 	split = tokenize(rl);
 	if (!split)
@@ -113,8 +116,8 @@ char	**parse(char **envp, char *rl)
 	split = handle_redirections(split);
 	if (!split)
 		return (printf("Error while handling redirections"), NULL);
-	struct_maker(split);
-	show_arr(split);
+	parsed = struct_maker(split);
+	show_t_parsed(parsed);
 	return (split);
 }
 

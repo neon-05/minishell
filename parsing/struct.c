@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:17:34 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 16:49:08 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:30:53 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int	remove_in_out(char **split, t_parsed *parsed)
 	int		i;
 
 	parsed->infile = NULL;
+	parsed->outfile = NULL;
+	parsed->out_mode = NULL;
+	parsed->split = NULL;
 	i = -1;
 	while (split[++i])
 	{
@@ -26,14 +29,18 @@ int	remove_in_out(char **split, t_parsed *parsed)
 			parsed->infile = ft_strdup(split[i]);
 			duck_fishing(split, i);
 		}
-		if (arr_size(split) > 2 && split[i + 1] && (ft_strnstr(split[i], ">", 2) || ft_strnstr(split[i], ">", 2)))//			>> = append		> = trunc
+		if (arr_size(split) > 2 && split[i + 1] && (ft_strnstr(split[i], ">>", 3) || ft_strnstr(split[i], ">", 2)))//			>> = append		> = trunc
 		{
-			parsed->out_mode = ft_strdup(split[i]);
+			if (ft_strnstr(split[i], ">>", 3))
+				parsed->out_mode = "O_APPEND";
+			else
+				parsed->out_mode = "O_WRONLY";
 			duck_fishing(split, i);
 			parsed->outfile = ft_strdup(split[i]);
 			duck_fishing(split, i);
 		}
 	}
+	parsed->split = split;
 	return (1);
 }
 

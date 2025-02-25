@@ -6,8 +6,8 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:29 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/06 17:55:16 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:46:52 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "parsing.h"

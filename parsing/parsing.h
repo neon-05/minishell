@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 16:49:33 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:45:36 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
+# include "../prompt/colors.h"
 
 //====================(DEFINES)=============================//
 
@@ -54,5 +55,8 @@ int		total_occ(char **split, int c);
 int		check_closed(char **split, int c, int n);
 int		check_follow(char **split, char *c);
 
+//debug
+void	show_arr(char **arr);
+void	show_t_parsed(t_parsed *parsed);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 13:32:24 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:00:58 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 # define PARSING_H
 
 //====================(INCLUDES)============================//
-
-# include "../minishell.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include "../libft/libft.h"
 
 //====================(DEFINES)=============================//
 
-typedef struct	t_parsed
+typedef struct	s_parsed
 {
 	char	**split;
 	char	*infile;
 	char	*outfile;
-}	s_parsed;
+}	t_parsed;
 
 //====================(STRUCTS)=============================//
 
@@ -39,8 +42,8 @@ char	**tokenize(char *rl);
 //limiter
 int	limiter(char *limiter);
 
-//limiter
-t_parsed	struct_maker(char **split);
+//struct
+t_parsed	*struct_maker(char **split);
 
 //parser_utils
 char	**list_insert(char **lst1, char **lst2, int n);

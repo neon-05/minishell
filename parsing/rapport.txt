@@ -4,8 +4,8 @@
 This is a file where i put the exemples of what is missing or need to be fixed/upgraded
 
 
-need to handle <<<																				✓
-
+need to handle:		< debug.c cat minishell.h		<=== it print the minishell.h file
+need to handle:		< debug.c cat					<=== it print the debug.c file
 
 -------------------------------------------------------------------------------------------------
 

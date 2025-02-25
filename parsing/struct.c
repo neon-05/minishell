@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:17:34 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 15:56:59 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:49:08 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,23 @@
 int	remove_in_out(char **split, t_parsed *parsed)
 {
 	int		i;
-	char	*temp;
 
-	(void)parsed;
+	parsed->infile = NULL;
 	i = -1;
 	while (split[++i])
 	{
 		if (arr_size(split) > 2 && split[i + 1] && ft_strnstr(split[i], "<", 2))
 		{
 			duck_fishing(split, i);
-			temp = split[i];
-			split[i] = split[i + 1];
-			split[i + 1] = temp;
-
+			parsed->infile = ft_strdup(split[i]);
+			duck_fishing(split, i);
+		}
+		if (arr_size(split) > 2 && split[i + 1] && (ft_strnstr(split[i], ">", 2) || ft_strnstr(split[i], ">", 2)))//			>> = append		> = trunc
+		{
+			parsed->out_mode = ft_strdup(split[i]);
+			duck_fishing(split, i);
+			parsed->outfile = ft_strdup(split[i]);
+			duck_fishing(split, i);
 		}
 	}
 	return (1);

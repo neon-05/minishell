@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 21:32:41 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 22:49:24 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,13 @@ char	*replace_var(char *str, char *path)
 	return (new);
 }
 
-char	*get_syntax_error(char c)
-{
-	char	*str;
-
-
-	str = ft_strjoin("bash: syntax error near unexpected token `", c);
-	if (!str)
-		return (NULL);
-	str = ft_strjoin_f(str, "'");//check ??
-	return (str);
-}
-
 int	is_problem_char(char *str)
 {
-	char	*error;
 
 	if (str[0] == '\'' || str[0] == ')' \
 		|| str[0] == '}' || str[0] == '<' || str[0] == '>')
 	{
-		error = get_syntax_error(str[0]);
-		if (!error)
-		{
-			printf("ERROR");
-			return (2);
-		}
-		ft_putstr_fd(error, 2);
+		printf("bash: syntax error near unexpected token `%c'\n", (str[0]));// pas le bon fd
 		return (1);
 	}
 	return (0);
@@ -111,11 +92,7 @@ char	**handle_redirections(char **split)
 		if (i >= 1 && split[i + 1] && ft_strnstr(split[i], "<<<", 4))
 		{
 			if (split[i + 1] && is_problem_char(split[i + 1]) == 1)
-			{
-				if (is_problem_char(split[i + 1]) == 2)
-					return (ft_free_arr(split, arr_size(split)), NULL);
 				return (ft_free_arr(split, arr_size(split)), NULL);
-			}
 			duck_fishing(split, i);
 			fd = open("./this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY, 0777);//verifier que ca marche selon les droits de l'executable
 			if (fd < 0)
@@ -139,6 +116,26 @@ char	**handle_redirections(char **split)
 	return (split);
 }
 
+void	trimm(char **split)
+{
+	int	i;
+
+	i = -1;
+	while (split[++i])
+	{
+		if (split[i][0] == '\'')
+		{
+			split[i] = ft_strtrim(split[i], "'");
+			//free(split[i]);
+		}
+		else if (split[i][0] == '"')
+		{
+			split[i] = ft_strtrim(split[i], "\"");
+			//free(split[i]);
+		}
+	}
+}
+
 t_parsed	*parse(char **envp, char *rl)
 {
 
@@ -147,14 +144,15 @@ t_parsed	*parse(char **envp, char *rl)
 
 	split = tokenize(rl);
 	if (!split)
-		return (NULL);
+		return (printf("Error while tokenizing\n"), NULL);
 	split = handle_env(envp, split);
 	if (!split)
-		return (printf("Error while handling env vars"), NULL);
+		return (printf("Error while handling env vars\n"), NULL);
 	split = handle_redirections(split);
 	if (!split)
-		return (printf("Error while handling redirections"), NULL);
+		return (printf("Error while handling redirects\n"), NULL);
 	parsed = struct_maker(split);
+	trimm(parsed->split);
 	show_t_parsed(parsed);
 	return (parsed);
 }

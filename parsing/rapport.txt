@@ -6,19 +6,7 @@
 
 
 
-corriger le trim de " et '
 
-
-
--------------------------------------------------------------------------------------------------
-
-
-└─[test]─> cat << $
-hello											!!! WORKING but should not											faire caaaaaaaaaaaaaaaaaa <====
-$			<=== stop here
-
-
-Only  )};<> shouldn't work
 
 -------------------------------------------------------------------------------------------------
 
@@ -77,4 +65,18 @@ $HOME			<=== stop here
 $HOME			<=== should have stop here
 /home/l			<=== but stoped here
 
+Only  )};<> shouldn't work																		✓
 
+
+-------------------------------------------------------------------------------------------------
+
+
+└─[test]─> cat << $
+hello											!!! WORKING but should not						✓
+$			<=== stop here
+
+
+-------------------------------------------------------------------------------------------------
+
+
+corriger le trim de " et '																		✓

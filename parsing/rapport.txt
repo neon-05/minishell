@@ -4,28 +4,35 @@
 This is a file where i put the exemples of what is missing or need to be fixed/upgraded
 
 
+need to handle <<<																				✓
 
 
-
-
+-------------------------------------------------------------------------------------------------
 
 
 cat << EOF | wc -l >> out        =========>>            cat	<<	EOF	|	wc	-l	>>	out			✓
 
 
 └─[test]─> cat << "$HOME"
-/home/l			<=== no stop here				!!!
+/home/l			<=== no stop here																!!!
 $HOME			<=== stop here
 /home/l
 
+┌─[l i@ frigo][ parsing][!?][C v14.2.1-gcc]
+└─[minishell_parsing]─> cat << $HOME
+$HOME			<=== should have stop here
+/home/l			<=== but stoped here
 
+
+-------------------------------------------------------------------------------------------------
 
 
 └─[test]─> cat << $
-hello											!!! WORKING
+hello											!!! WORKING but should not
 $			<=== stop here
 
 
+-------------------------------------------------------------------------------------------------
 
 
 ┌─[l]~[/home/l/42/test]~o

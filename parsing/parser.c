@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 00:34:37 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:08:37 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,24 @@ char	**handle_env(char **envp, char **split)
 char	**handle_redirections(char **split)
 {
 	int		i;
+	int		fd;
 	char	*temp;
 
 	i = -1;
 	while (split[++i])
 	{
-		if (i >= 1 && split[i + 1] && ft_strnstr(split[i], "<<", 2))
+		if (i >= 1 && split[i + 1] && ft_strnstr(split[i], "<<<", 4))
+		{
+			duck_fishing(split, i);
+			fd = open("./this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY, 0777);//verifier que ca marche selon les droits de l'executable
+			if (fd < 0)
+				return (printf("Error opening files of LIMITER\n"), NULL);//free
+			write(fd, split[i], ft_strlen(split[i]));
+			temp = split[i];
+			split[i] = "this_is_a_temporary_file_for_the_eof";
+			free(temp);
+		}
+		else if (i >= 1 && split[i + 1] && ft_strnstr(split[i], "<<", 3))
 		{
 			limiter(split[i + 1]);
 			duck_fishing(split, i);
@@ -82,6 +94,7 @@ char	**handle_redirections(char **split)
 			split[i] = "this_is_a_temporary_file_for_the_eof";
 			free(temp);
 		}
+
 	}
 	return (split);
 }

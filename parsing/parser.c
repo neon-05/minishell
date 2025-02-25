@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 18:01:25 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 21:32:41 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,37 @@ char	*replace_var(char *str, char *path)
 	return (new);
 }
 
+char	*get_syntax_error(char c)
+{
+	char	*str;
+
+
+	str = ft_strjoin("bash: syntax error near unexpected token `", c);
+	if (!str)
+		return (NULL);
+	str = ft_strjoin_f(str, "'");//check ??
+	return (str);
+}
+
+int	is_problem_char(char *str)
+{
+	char	*error;
+
+	if (str[0] == '\'' || str[0] == ')' \
+		|| str[0] == '}' || str[0] == '<' || str[0] == '>')
+	{
+		error = get_syntax_error(str[0]);
+		if (!error)
+		{
+			printf("ERROR");
+			return (2);
+		}
+		ft_putstr_fd(error, 2);
+		return (1);
+	}
+	return (0);
+}
+
 char	**handle_env(char **envp, char **split)
 {
 	char	*path;
@@ -49,7 +80,7 @@ char	**handle_env(char **envp, char **split)
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
 			split[i] = ft_strtrim(split[i], "\"");//leaks
-			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3))
+			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3))// && i < size of split ?
 				break ;
 			path = get_envp(envp, ft_strchr(split[i], '$') + 1) + 1;
 			if (find_envp(envp, ft_strchr(split[i], '$') + 1) == arr_size(envp))
@@ -79,10 +110,16 @@ char	**handle_redirections(char **split)
 	{
 		if (i >= 1 && split[i + 1] && ft_strnstr(split[i], "<<<", 4))
 		{
+			if (split[i + 1] && is_problem_char(split[i + 1]) == 1)
+			{
+				if (is_problem_char(split[i + 1]) == 2)
+					return (ft_free_arr(split, arr_size(split)), NULL);
+				return (ft_free_arr(split, arr_size(split)), NULL);
+			}
 			duck_fishing(split, i);
 			fd = open("./this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY, 0777);//verifier que ca marche selon les droits de l'executable
 			if (fd < 0)
-				return (printf("Error opening files of LIMITER\n"), NULL);//free
+				return (ft_free_arr(split, arr_size(split)), printf("Error opening files of LIMITER\n"), NULL);
 			write(fd, split[i], ft_strlen(split[i]));
 			temp = split[i];
 			split[i] = "this_is_a_temporary_file_for_the_eof";
@@ -90,18 +127,19 @@ char	**handle_redirections(char **split)
 		}
 		else if (i >= 1 && split[i + 1] && ft_strnstr(split[i], "<<", 3))
 		{
+			if (split[i + 1] && is_problem_char(split[i + 1]))
+				return (ft_free_arr(split, arr_size(split)), NULL);
 			limiter(split[i + 1]);
 			duck_fishing(split, i);
 			temp = split[i];
 			split[i] = "this_is_a_temporary_file_for_the_eof";
 			free(temp);
 		}
-
 	}
 	return (split);
 }
 
-char	**parse(char **envp, char *rl)
+t_parsed	*parse(char **envp, char *rl)
 {
 
 	char		**split;
@@ -118,7 +156,7 @@ char	**parse(char **envp, char *rl)
 		return (printf("Error while handling redirections"), NULL);
 	parsed = struct_maker(split);
 	show_t_parsed(parsed);
-	return (split);
+	return (parsed);
 }
 
 

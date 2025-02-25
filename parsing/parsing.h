@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 17:45:36 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 21:31:29 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct	s_parsed
 //====================(DECLARATIONS)========================//
 
 //parser
-char	**parse(char **envp, char *rl);
+t_parsed	*parse(char **envp, char *rl);
 
 //tokenizer
 char	**tokenize(char *rl);

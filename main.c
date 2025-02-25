@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:24:35 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/19 18:32:21 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/25 21:30:25 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **envp)
 {
 	char	*rl;
 	char	*pr;
-	char	**list;
+	t_parsed	*list;
 
 	(void)ac;
 	(void)av;
@@ -34,7 +34,7 @@ int	main(int ac, char **av, char **envp)
 		free(pr);
 		pr = prompt(envp);
 	}
-	ft_free_arr(list, arr_size(list));
+	//ft_free_t_parsed(list, arr_size(list));
 	free(pr);
 	free(rl);
 	return (0);

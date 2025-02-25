@@ -9,7 +9,7 @@
 
 
 └─[test]─> cat << $
-hello											!!! WORKING but should not
+hello											!!! WORKING but should not											faire caaaaaaaaaaaaaaaaaa <====
 $			<=== stop here
 
 

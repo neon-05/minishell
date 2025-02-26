@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 22:49:24 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:03:36 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,17 @@ char	**handle_env(char **envp, char **split)
 	path = NULL;
 	while (split[++i])
 	{
-//		if (ft_strlen(ft_strchr(split[i], '$')) == 1 && ft_strnstr(ft_strchr(split[i], '$') + 1, "$$", 2) != 0)//a faire
-//			path = get_envp(envp, "BASHPID=");
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
 			split[i] = ft_strtrim(split[i], "\"");//leaks
 			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3))// && i < size of split ?
 				break ;
+			if (ft_strnstr(split[i], "$$", 3))
+			{
+				temp = split[i];
+				split[i] = ft_strdup("$BASHPID");												//Faut rajouter le PID dans les env que yoan cree
+				free(temp);
+			}
 			path = get_envp(envp, ft_strchr(split[i], '$') + 1) + 1;
 			if (find_envp(envp, ft_strchr(split[i], '$') + 1) == arr_size(envp))
 				temp = replace_var(split[i], "");//free path

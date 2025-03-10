@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/24 23:30:51 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:00:53 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	check_follow(char **split, char *c)
 	i = 0;
 	while (i < size)
 	{
-		if (split[i + 1] && (ft_strncmp(split[i], c, 1) == 0 && ft_strncmp(split[i + 1], c, 1) == 0))
+		if (split[i + 1] && (ft_strncmp(split[i], c, 1) == 0 \
+			&& ft_strncmp(split[i + 1], c, 1) == 0))
 		{
 			split[i] = ft_strjoin_f(split[i], split[i + 1]);
 			if (!split[i])

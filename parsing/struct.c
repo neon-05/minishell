@@ -6,11 +6,29 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:17:34 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 17:30:53 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:16:10 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	left_op(t_parsed *parsed, char **split, int i)
+{
+	duck_fishing(split, i);
+	parsed->infile = ft_strdup(split[i]);
+	duck_fishing(split, i);
+}
+
+void	right_op(t_parsed *parsed, char **split, int i)
+{
+	if (ft_strnstr(split[i], ">>", 3))
+		parsed->out_mode = "O_APPEND";
+	else
+		parsed->out_mode = "O_WRONLY";
+	duck_fishing(split, i);
+	parsed->outfile = ft_strdup(split[i]);
+	duck_fishing(split, i);
+}
 
 int	remove_in_out(char **split, t_parsed *parsed)
 {
@@ -24,21 +42,10 @@ int	remove_in_out(char **split, t_parsed *parsed)
 	while (split[++i])
 	{
 		if (arr_size(split) > 2 && split[i + 1] && ft_strnstr(split[i], "<", 2))
-		{
-			duck_fishing(split, i);
-			parsed->infile = ft_strdup(split[i]);
-			duck_fishing(split, i);
-		}
-		if (arr_size(split) > 2 && split[i + 1] && (ft_strnstr(split[i], ">>", 3) || ft_strnstr(split[i], ">", 2)))//			>> = append		> = trunc
-		{
-			if (ft_strnstr(split[i], ">>", 3))
-				parsed->out_mode = "O_APPEND";
-			else
-				parsed->out_mode = "O_WRONLY";
-			duck_fishing(split, i);
-			parsed->outfile = ft_strdup(split[i]);
-			duck_fishing(split, i);
-		}
+			left_op(parsed, split, i);
+		if (arr_size(split) > 2 && split[i + 1] \
+				&& (ft_strnstr(split[i], ">>", 3) || ft_strnstr(split[i], ">", 2))) //			>> = append		> = trunc
+			right_op(parsed, split, i);
 	}
 	parsed->split = split;
 	return (1);

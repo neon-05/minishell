@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/26 19:03:36 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:51:13 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*replace_var(char *str, char *path)
 {
-	char	*new;
+	char	*n;
 	int		i;
 	int		j;
 
@@ -24,19 +24,18 @@ char	*replace_var(char *str, char *path)
 		i++;
 	while (str[i + j] && str[i + j] != ' ' && ft_isalpha(str[i + j]))
 		j++;
-	new = ft_calloc(1, sizeof(char) * (ft_strlen(str) - j + ft_strlen(path) + 1));
-	if (!new)
+	n = ft_calloc(1, sizeof(char) * (ft_strlen(str) - j + ft_strlen(path) + 1));
+	if (!n)
 		return (NULL);
-	ft_strlcat(new, str, i);
-	ft_strlcat_mod(new, path, ft_strlen(path) + 1);
-	ft_strlcat_mod(new, str + i + j, ft_strlen(str + i + j));
-	new[ft_strlen(str) - j + ft_strlen(path) + 1] = '\0';
-	return (new);
+	ft_strlcat(n, str, i);
+	ft_strlcat_mod(n, path, ft_strlen(path) + 1);
+	ft_strlcat_mod(n, str + i + j, ft_strlen(str + i + j));
+	n[ft_strlen(str) - j + ft_strlen(path) + 1] = '\0';
+	return (n);
 }
 
 int	is_problem_char(char *str)
 {
-
 	if (str[0] == '\'' || str[0] == ')' \
 		|| str[0] == '}' || str[0] == '<' || str[0] == '>')
 	{
@@ -48,9 +47,9 @@ int	is_problem_char(char *str)
 
 char	**handle_env(char **envp, char **split)
 {
+	int		i;
 	char	*path;
 	char	*temp;
-	int	i;
 
 	i = -1;
 	path = NULL;
@@ -59,12 +58,12 @@ char	**handle_env(char **envp, char **split)
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
 			split[i] = ft_strtrim(split[i], "\"");//leaks
-			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3))// && i < size of split ?
+			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3)) // && i < size of split ?
 				break ;
 			if (ft_strnstr(split[i], "$$", 3))
 			{
 				temp = split[i];
-				split[i] = ft_strdup("$BASHPID");												//Faut rajouter le PID dans les env que yoan cree
+				split[i] = ft_strdup("$BASHPID"); //Faut rajouter le PID dans les env que yoan cree
 				free(temp);
 			}
 			path = get_envp(envp, ft_strchr(split[i], '$') + 1) + 1;
@@ -142,7 +141,6 @@ void	trimm(char **split)
 
 t_parsed	*parse(char **envp, char *rl)
 {
-
 	char		**split;
 	t_parsed	*parsed;
 
@@ -161,73 +159,4 @@ t_parsed	*parse(char **envp, char *rl)
 	return (parsed);
 }
 
-
-
-
-
 //WARNING  "echo \$HOME"	>>	"$HOME"
-
-
-
-
-
-
-
-
-
-
-
-/*
-int	init_token(t_token **token)
-{
-	(*token) = malloc(sizeof(t_token));
-	if (!(*token))
-		return (0);
-	(*token)->str = NULL;
-	(*token)->path = NULL;
-	(*token)->is_cmd = 0;
-	(*token)->is_d_quoted = 0;
-	(*token)->is_quoted = 0;
-	(*token)->next = NULL;
-	return (1);
-}
-
-t_token	*list_const(char **envp, char **split)
-{
-	t_token	*lst;
-	t_token	*current;
-	int	i;
-
-	if (!init_token(&lst))
-		return (NULL);
-	current = lst;
-	i = -1;
-	while (split[++i])
-	{
-		current->str = ft_strdup(split[i]);//check
-		if (!current->str)
-			return (NULL);
-		current->path = get_path(envp, split[i]); //gerer pour enlever les "
-		if (current->path != NULL)
-			current->is_cmd = 1;
-		if (!init_token(&(current->next)))
-			return (NULL);//ft_free_t_token a faire
-		current = current->next;
-	}
-	return (lst);
-}
-
-t_token	*parse(char **envp, char *rl)
-{
-	char	**split;
-	t_token	*lst;
-
-	lst = NULL;
-	split = tokenize(rl);
-	if (!split)
-		return(NULL);
-	lst = list_const(envp, split);
-	return (ft_free_arr(split, arr_size(split)), lst);
-}
-
-*/

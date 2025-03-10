@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 15:59:28 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:18:27 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**split_insert_arr(char ***split, int c)
 	i = -1;
 	while ((*split)[++i])
 	{
-		(*split) = list_insert((*split), ft_split_let((*split)[i], c), i);
+		(*split) = list_insert((*split), ft_split_let((*split)[i], c), i); // check
 		if (!split)
 			return (NULL);
 	}

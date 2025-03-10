@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 16:03:43 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:36:50 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ int			count_occ(char *str, int c);
 int			total_occ(char **split, int c);
 int			check_closed(char **split, int c, int n);
 int			check_follow(char **split, char *c);
+
+//clean
+void	clean_parsed(t_parsed *parsed);
 
 //debug
 void		show_arr(char **arr);

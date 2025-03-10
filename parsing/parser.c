@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 16:10:49 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:38:30 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ char	**handle_env(char **envp, char **split)
 	{
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
-			split[i] = ft_strtrim(split[i], "\"");//leaks
+			free(split[i]);
+			split[i] = ft_strtrim(split[i], "\"");
 			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3))
 				break ;
 			if (ft_strnstr(split[i], "$$", 3))
 			{
-				temp = split[i];
+				free(split[i]);
 				split[i] = ft_strdup("$BASHPID"); //Faut rajouter le PID dans les env que yoan cree
-				free(temp);
 			}
 			path = get_envp(envp, ft_strchr(split[i], '$') + 1) + 1;
 			if (find_envp(envp, ft_strchr(split[i], '$') + 1) == arr_size(envp))
@@ -87,7 +87,6 @@ char	**handle_redirections(char **split)
 {
 	int		i;
 	int		fd;
-	char	*temp;
 
 	i = -1;
 	while (split[++i])
@@ -100,10 +99,12 @@ char	**handle_redirections(char **split)
 			fd = open("./this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY, 0777);//verifier que ca marche selon les droits de l'executable
 			if (fd < 0)
 				return (ft_free_arr(split, arr_size(split)), printf("Error opening files of LIMITER\n"), NULL);
-			write(fd, split[i], ft_strlen(split[i]));
-			temp = split[i];
-			split[i] = "this_is_a_temporary_file_for_the_eof";
-			free(temp);
+			write(fd, split[i], ft_strlen(split[i])); //check
+			close(fd);
+			free(split[i]);
+			split[i] = ft_strdup("this_is_a_temporary_file_for_the_eof");
+			if (!split[i])
+				return (ft_free_arr(split, arr_size(split)), NULL);
 		}
 		else if (i >= 1 && split[i + 1] && ft_strnstr(split[i], "<<", 3))
 		{
@@ -111,9 +112,9 @@ char	**handle_redirections(char **split)
 				return (ft_free_arr(split, arr_size(split)), NULL);
 			limiter(split[i + 1]);
 			duck_fishing(split, i);
-			temp = split[i];
-			split[i] = "this_is_a_temporary_file_for_the_eof";
-			free(temp);
+			split[i] = ft_strdup("this_is_a_temporary_file_for_the_eof");
+			if (!split[i])
+				return (ft_free_arr(split, arr_size(split)), NULL);
 		}
 	}
 	return (split);
@@ -128,13 +129,13 @@ void	trimm(char **split)
 	{
 		if (split[i][0] == '\'')
 		{
+			free(split[i]);
 			split[i] = ft_strtrim(split[i], "'");
-			//free(split[i]);
 		}
 		else if (split[i][0] == '"')
 		{
+			free(split[i]);
 			split[i] = ft_strtrim(split[i], "\"");
-			//free(split[i]);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 19:15:25 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 15:35:44 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:39:37 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	limiter(char *limiter)
 	int		fd;
 	char	*line;
 
-	limiter = ft_strjoin(limiter, "\n");
+	limiter = ft_strjoin_f(limiter, "\n");
 	if (!limiter)
 		return (0);
 	fd = open("./this_is_a_temporary_file_for_the_eof"\
@@ -53,10 +53,11 @@ int	limiter(char *limiter)
 	while (get_line(&line))
 	{
 		if (ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0)
-			return (free(line), close(fd), 1);
+			return (free(line), free(limiter), close(fd), 1);
 		write(fd, line, ft_strlen(line));
 		free(line);
 	}
+	free(limiter);
 	close(fd);
 	return (1);
 }

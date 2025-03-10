@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 16:00:53 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:33:22 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,7 @@ char	**list_insert(char **lst1, char **lst2, int n)
 	int		i;
 	int		j;
 
-	if (!lst1 || !lst2)
-		return (NULL);
-	if (n >= arr_size(lst1))
+	if (!lst1 || !lst2 || n >= arr_size(lst1))
 		return (NULL);
 	size = arr_size(lst1) - 1 + arr_size(lst2);
 	new = malloc((size + 1) * sizeof(char *));

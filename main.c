@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:24:35 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 21:30:25 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:46:33 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,14 @@ int	main(int ac, char **av, char **envp)
 	{
 		free(rl);
 		rl = readline(pr);
-		list = parse(envp, rl);//voir qu'est ce que je dois renvoyer (on peut changer en char *** ou n'importe)
+		list = parse(envp, rl);
 		if (!list)
 			break ;
-		//show_arr(hist);
 		//process(list);
+		clean_parsed(list);
 		free(pr);
 		pr = prompt(envp);
 	}
-	//ft_free_t_parsed(list, arr_size(list));
 	free(pr);
 	free(rl);
 	return (0);

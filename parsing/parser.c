@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 15:51:13 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:10:49 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	is_problem_char(char *str)
 	if (str[0] == '\'' || str[0] == ')' \
 		|| str[0] == '}' || str[0] == '<' || str[0] == '>')
 	{
-		printf("bash: syntax error near unexpected token `%c'\n", (str[0]));// pas le bon fd
+		printf("bash: syntax error near unexpected token `%c'\n", (str[0])); // pas le bon fd (c'est grave chef?)
 		return (1);
 	}
 	return (0);
@@ -58,7 +58,7 @@ char	**handle_env(char **envp, char **split)
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
 			split[i] = ft_strtrim(split[i], "\"");//leaks
-			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3)) // && i < size of split ?
+			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3))
 				break ;
 			if (ft_strnstr(split[i], "$$", 3))
 			{
@@ -154,6 +154,8 @@ t_parsed	*parse(char **envp, char *rl)
 	if (!split)
 		return (printf("Error while handling redirects\n"), NULL);
 	parsed = struct_maker(split);
+	if (!parsed)
+		return (NULL);
 	trimm(parsed->split);
 	show_t_parsed(parsed);
 	return (parsed);

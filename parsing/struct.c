@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:17:34 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 16:16:10 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:08:19 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ int	remove_in_out(char **split, t_parsed *parsed)
 		if (arr_size(split) > 2 && split[i + 1] \
 				&& (ft_strnstr(split[i], ">>", 3) || ft_strnstr(split[i], ">", 2))) //			>> = append		> = trunc
 			right_op(parsed, split, i);
+	}
+	if (split[i - 1] && ft_strnstr(split[i - 1], ">>", 2))
+	{
+		printf("bash: syntax error near unexpected token `newline'"); // Mauvais input (c'est grave chef)
+		return (0);
 	}
 	parsed->split = split;
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 20:38:30 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:31:19 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,13 +129,11 @@ void	trimm(char **split)
 	{
 		if (split[i][0] == '\'')
 		{
-			free(split[i]);
-			split[i] = ft_strtrim(split[i], "'");
+			split[i] = ft_strtrim(split[i], "'"); // leaks
 		}
 		else if (split[i][0] == '"')
 		{
-			free(split[i]);
-			split[i] = ft_strtrim(split[i], "\"");
+			split[i] = ft_strtrim(split[i], "\""); // leaks
 		}
 	}
 }
@@ -151,13 +149,13 @@ t_parsed	*parse(char **envp, char *rl)
 	split = handle_env(envp, split);
 	if (!split)
 		return (printf("Error while handling env vars\n"), NULL);
+	trimm(split);
 	split = handle_redirections(split);
 	if (!split)
 		return (printf("Error while handling redirects\n"), NULL);
 	parsed = struct_maker(split);
 	if (!parsed)
 		return (NULL);
-	trimm(parsed->split);
 	show_t_parsed(parsed);
 	return (parsed);
 }

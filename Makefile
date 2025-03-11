@@ -6,7 +6,7 @@
 #    By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/09 00:28:46 by malapoug          #+#    #+#              #
-#    Updated: 2025/03/10 19:37:14 by malapoug         ###   ########.fr        #
+#    Updated: 2025/03/11 13:53:21 by malapoug         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,19 +18,19 @@ DEBUG = -fsanitize=address
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS_PARSING = parsing/parser.c\
-	parsing/parser_utils.c\
-	parsing/tokenizer.c\
-	parsing/tokenizer_utils.c\
-	parsing/limiter.c\
-	parsing/struct.c\
-	parsing/debug.c\
-	parsing/clean.c
+SRCS_PARSING = parser.c\
+	parser_utils.c\
+	tokenizer.c\
+	tokenizer_utils.c\
+	limiter.c\
+	struct.c\
+	debug.c\
+	clean.c
 
 SRCS = main.c\
 	envp.c\
 	prompt/prompt.c\
-	$(SRCS_PARSING)\
+	$(addprefix parsing/, $(SRCS_PARSING))\
 	lib_utils/ft_split_let.c\
 	lib_utils/ft_strjoin_f.c\
 	lib_utils/ft_free_arr.c\

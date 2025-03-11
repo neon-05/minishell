@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/11 14:15:45 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:57:31 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ char	**full_split(char *rl)
 char	**tokenize(char *rl)
 {
 	char	**split;
-	int		i;
+//	int		i;
 
-	i = -1;
+//	i = -1;
 	split = full_split(rl);
 	if (!split)
 		return (NULL);
@@ -75,14 +75,14 @@ char	**tokenize(char *rl)
 		return (0);
 	if (!check_follow(split, "$"))
 		return (0);
-	while (split[++i])
-	{
-		if (ft_strncmp(split[i], " ", 2) == 0 || ft_strncmp(split[i], "\"\"", 2) == 0)
-		{
-			duck_fishing(split, i);//check ?
-			i--;
-		}
-	}
+//	while (split[++i])
+//	{
+//		if (ft_strncmp(split[i], " ", 2) == 0 || ft_strncmp(split[i], "\"\"", 2) == 0)
+//		{
+//			duck_fishing(split, i);//check ?
+//			i--;
+//		}
+//	}
 	return (split);
 }
 // ^^^^^ checker partout ^^^^^

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/11 14:31:19 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:22:53 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,15 @@ char	**handle_env(char **envp, char **split)
 	{
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
-			free(split[i]);
-			split[i] = ft_strtrim(split[i], "\"");
+			split[i] = ft_strtrim(split[i], "\"");//leaks
 			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3))
 				break ;
-			if (ft_strnstr(split[i], "$$", 3))
-			{
-				free(split[i]);
-				split[i] = ft_strdup("$BASHPID"); //Faut rajouter le PID dans les env que yoan cree
-			}
-			path = get_envp(envp, ft_strchr(split[i], '$') + 1) + 1;
+//			if (ft_strnstr(split[i], "$$", 3))
+//			{
+//				free(split[i]);
+//				split[i] = ft_strdup("$BASHPID"); //Faut rajouter le PID dans les env que yoan cree
+//			}
+			path = get_envp(envp, ft_strchr(split[i], '$') + 1) + 1; // check
 			if (find_envp(envp, ft_strchr(split[i], '$') + 1) == arr_size(envp))
 				temp = replace_var(split[i], "");//free path
 			else
@@ -77,6 +76,7 @@ char	**handle_env(char **envp, char **split)
 			{
 				free(split[i]);
 				split[i] = temp;
+				split = list_insert(split, tokenize(split[i]), i); // check
 			}
 		}
 	}

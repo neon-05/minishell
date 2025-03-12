@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 13:43:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/02/25 17:45:10 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:21:07 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ void	show_t_parsed(t_parsed *parsed)
 {
 	printf(BLUE "\nIN T_PARSED** :\n\n" RESET);
 	printf("INFILE:\n%s\n\n", parsed->infile);
-	printf("OUTFILE:\n%s\n\n", parsed->outfile);
-	printf("OUT_MODE:\n%s\n\n", parsed->out_mode);
-	printf(BLUE "STR:" RESET);
+	printf("OUTFILE:\n");
+	show_arr(parsed->outfile);
+	printf("\nOUT_MODE:\n");
+	show_arr(parsed->out_mode);
+	printf(BLUE "\nSTR:" RESET);
 	printf("\n");
 	show_arr(parsed->split);
 }

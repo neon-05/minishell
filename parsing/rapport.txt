@@ -4,6 +4,15 @@
 |=======================================================================================|
 
 
+
+
+┌─[l @ frigo][ parsing][!?][C v14.2.1-gcc]
+└─[minishell_parsing]─✖ >> test					<=== gnl while not ctrl D signal
+
+
+-------------------------------------------------------------------------------------------------
+
+
 chaenger la struct en char **ouput et char **out_mode pour gerer les doubles output
 
 cat <<< "hello" >> cat >> test		<== censer rediriger l'output vers les deux mais actuellement que le deuxieme

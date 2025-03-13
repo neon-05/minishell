@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:17:34 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/12 13:20:11 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/13 02:45:47 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*right_op(char **split, int i, char **out)
 	duck_fishing(split, i);
 	return (temp);
 }
-
 int	remove_in_out(char **split, t_parsed *parsed)
 {
 	char	*mode;
@@ -45,13 +44,16 @@ int	remove_in_out(char **split, t_parsed *parsed)
 		if (arr_size(split) > 2 && split[i + 1] && ft_strnstr(split[i], "<", 2))
 		{
 			duck_fishing(split, i);
+			i = skip_ispaces(split, i);
 			parsed->infile = ft_strdup(split[i]);
+			i = skip_ispaces(split, i);
 			duck_fishing(split, i);
 			i--;
 		}
 		else if (arr_size(split) > 2 && split[i + 1] \
 				&& (ft_strnstr(split[i], ">>", 3) || ft_strnstr(split[i], ">", 2))) // >> = append  > = trunc
 		{
+			i = skip_ispaces(split, i);
 			mode = ft_strjoin_f(mode, ","); // check ?
 			mode = ft_strjoin_f(mode, right_op(split, i, &out)); // check ?
 			i--;
@@ -62,14 +64,52 @@ int	remove_in_out(char **split, t_parsed *parsed)
 		printf("bash: syntax error near unexpected token `newline'"); // Mauvais input (c'est grave chef)
 		return (0);
 	}
-	parsed->outfile = ft_split(out, ',');
-	parsed->out_mode = ft_split(mode, ',');
+	if (out && mode)
+	{
+		parsed->outfile = ft_split(out, ',');
+		parsed->out_mode = ft_split(mode, ',');
+	}
 	free(out);
 	free(mode);
 	parsed->split = split;
 	return (1);
 }
+/*
+int	remove_in_out(char **split, t_parsed *parsed)
+{
+	int	i;
 
+	i = -1;
+	while (split[++i])
+	{
+		if (arr_size(split) > 2 && split[i + 1] && ft_strnstr(split[i], "<", 2))
+		{
+			duck_fishing(split, i);
+			i = skip_ispaces(split, i);
+			parsed->infile = ft_strdup(split[i]);
+			if (!parsed->infile)
+				return (0); // leaks
+			duck_fishing(split, i);
+			i--;
+		}
+		else if (arr_size(split) > 2 && split[i + 1] \
+				&& (ft_strnstr(split[i], ">>", 3) || ft_strnstr(split[i], ">", 2))) // >> = append  > = trunc
+		{
+			if (ft_strnstr(split[i], ">", 2))
+				parsed->out_mode = ft_strdup("O_WRONLY"); // check
+			else
+				parsed->out_mode = ft_strdup("O_APPEND"); // check
+			duck_fishing(split, i);
+			i = skip_ispaces(split, i);
+			parsed->outfile = ft_strdup(split[i]);
+			duck_fishing(split, i);
+			i--;
+		}
+	}
+	return (1);
+}
+
+*/
 t_parsed	*struct_maker(char **split)
 {
 	t_parsed	*parsed;

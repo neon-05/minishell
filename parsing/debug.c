@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 13:43:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/12 13:21:07 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/13 02:03:09 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	show_arr(char **arr)
 	int	i;
 
 	i = 0;
+	if (!arr)
+	{
+		printf("(null)\n");
+		return;
+	}
 	while (arr[i])
 	{
 		ft_putstr_fd(arr[i], 2);

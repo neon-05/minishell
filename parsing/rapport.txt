@@ -6,6 +6,17 @@
 
 
 
+
+
+
+┌─[l]~[/home/l/42/minishell_parsing]~o
+└─O <<  cfs
+AddressSanitizer:DEADLYSIGNAL
+
+
+-------------------------------------------------------------------------------------------------
+
+
 ┌─[l @ frigo][ parsing][!?][C v14.2.1-gcc]
 └─[minishell_parsing]─✖ >> test					<=== gnl while not ctrl D signal
 

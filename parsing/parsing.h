@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/13 02:14:12 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:35:43 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_parsed	*struct_maker(char **split);
 
 //parser_utils
 int			skip_ispaces(char **split, int i);
+int			skip_ispaces_(char **split, int i);
 char		**list_insert(char **lst1, char **lst2, int n);
 void		duck_fishing(char **split, int i);
 int			count_occ(char *str, int c);

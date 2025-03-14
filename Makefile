@@ -6,7 +6,7 @@
 #    By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/09 00:28:46 by malapoug          #+#    #+#              #
-#    Updated: 2025/03/11 13:53:21 by malapoug         ###   ########.fr        #
+#    Updated: 2025/03/14 17:20:46 by malapoug         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,9 @@ SRCS_PARSING = parser.c\
 	tokenizer.c\
 	tokenizer_utils.c\
 	limiter.c\
-	struct.c\
 	debug.c\
-	clean.c
+	clean.c\
+#	struct.c\
 
 SRCS = main.c\
 	envp.c\

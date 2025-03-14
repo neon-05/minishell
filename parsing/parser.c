@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/13 02:20:00 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:51:08 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,31 +57,27 @@ char	**handle_env(char **envp, char **split)
 	{
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
-			split[i] = ft_strtrim(split[i], "\"");//leaks
-			if (i > 0 && ft_strnstr(split[i - 1], "<<", 3))
+			if (split[skip_ispaces_(split, i - 1)] && ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<", 3)) // here problem for cat <<< "hello $USER"
 				break ;
+			path = get_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) + 1;//check
+			if (find_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) == arr_size(envp))
+				temp = replace_var(split[skip_ispaces(split, i)], "");//free path
+			else
+				temp = replace_var(split[skip_ispaces(split, i)], path);
+			if (!temp)
+				return (ft_free_arr(split, arr_size(split)), NULL);
+			free(split[skip_ispaces(split, i)]);
+			split[skip_ispaces(split, i)] = temp;
+			split = list_insert(split, tokenize(split[skip_ispaces(split, i)]), skip_ispaces(split, i)); // check
+		}
+	}
+	return (split);
+}
 //			if (ft_strnstr(split[i], "$$", 3))
 //			{
 //				free(split[i]);
 //				split[i] = ft_strdup("$BASHPID"); //Faut rajouter le PID dans les env que yoan cree
 //			}
-			path = get_envp(envp, ft_strchr(split[i], '$') + 1) + 1; // check
-			if (find_envp(envp, ft_strchr(split[i], '$') + 1) == arr_size(envp))
-				temp = replace_var(split[i], "");//free path
-			else
-				temp = replace_var(split[i], path);
-			if (!temp)
-				return (ft_free_arr(split, arr_size(split)), NULL);
-			else
-			{
-				free(split[i]);
-				split[i] = temp;
-				split = list_insert(split, tokenize(split[i]), i); // check
-			}
-		}
-	}
-	return (split);
-}
 
 char	**handle_redirections(char **split)
 {
@@ -91,11 +87,17 @@ char	**handle_redirections(char **split)
 	i = -1;
 	while (split[++i])
 	{
-		if (i >= 1 && split[i + 1] && ft_strnstr(split[i], "<<<", 4))
+		if (ft_strnstr(split[i], "<<<", 4))
 		{
-			if (split[i + 1] && is_problem_char(split[i + 1]) == 1)
-				return (ft_free_arr(split, arr_size(split)), NULL);
 			duck_fishing(split, i);
+			i = skip_ispaces(split, i);
+			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
+			{
+				if (!split[i])
+					printf("bash: syntax error near unexpected token `newline'");
+				ft_free_arr(split, arr_size(split));
+				exit(2);
+			}
 			fd = open("./this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY, 0777);//verifier que ca marche selon les droits de l'executable
 			if (fd < 0)
 				return (ft_free_arr(split, arr_size(split)), printf("Error opening files of LIMITER\n"), NULL);
@@ -106,12 +108,18 @@ char	**handle_redirections(char **split)
 			if (!split[i])
 				return (ft_free_arr(split, arr_size(split)), NULL);
 		}
-		else if (i >= 1 && split[i + 1] && ft_strnstr(split[i], "<<", 3))
+		else if (ft_strnstr(split[i], "<<", 3))
 		{
-			if (split[i + 1] && is_problem_char(split[i + 1]))
-				return (ft_free_arr(split, arr_size(split)), NULL);
-			limiter(split[i + 1]);
 			duck_fishing(split, i);
+			i = skip_ispaces(split, i);
+			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
+			{
+				if (!split[i])
+					printf("bash: syntax error near unexpected token `newline'");
+				ft_free_arr(split, arr_size(split));
+				exit(2);
+			}
+			limiter(split[i]);
 			split[i] = ft_strdup("this_is_a_temporary_file_for_the_eof");
 			if (!split[i])
 				return (ft_free_arr(split, arr_size(split)), NULL);
@@ -146,17 +154,20 @@ t_parsed	*parse(char **envp, char *rl)
 	split = tokenize(rl);
 	if (!split)
 		return (printf("Error while tokenizing\n"), NULL);
+	(void)envp;
 	split = handle_env(envp, split);
 	if (!split)
 		return (printf("Error while handling env vars\n"), NULL);
 	split = handle_redirections(split);
 	if (!split)
 		return (printf("Error while handling redirects\n"), NULL);
-	parsed = struct_maker(split);
-	if (!parsed)
-		return (NULL);
+//	parsed = struct_maker(split);
+//	if (!parsed)
+//		return (NULL);
 //	trimm(parsed->split);
-	show_t_parsed(parsed);
+//	show_t_parsed(parsed);
+	show_arr(split);
+		return (NULL);
 	return (parsed);
 }
 

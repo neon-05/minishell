@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/13 02:00:41 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:08:43 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,38 +54,35 @@ char	**full_split(char *rl)
 	return (split);
 }
 
-char	**tokenize(char *rl)
+char	**full_join_sign(char **split)
 {
-	char	**split;
-//	int		i;
-
-//	i = -1;
-	split = full_split(rl);
-	if (!split)
-		return (NULL);
 	if (total_occ(split, '\"') % 2 != 0 || total_occ(split, '\'') % 2 != 0) // gerer " ' " '
 		ft_putstr_fd(RED "[ツ] Unclosed quote !\n" RESET, 2);
 	if (!check_closed(split, '"', 2))
-		return (0);
+		return (NULL);
 	if (!check_closed(split, '\'', 2))
-		return (0);
+		return (NULL);
 	if (!check_follow(split, "<"))
-		return (0);
+		return (NULL);
 	if (!check_follow(split, ">"))
-		return (0);
+		return (NULL);
 	if (!check_follow(split, "$"))
-		return (0);
-//	while (split[++i])
-//	{
-//		if (ft_strncmp(split[i], " ", 2) == 0 || ft_strncmp(split[i], "\"\"", 2) == 0)
-//		{
-//			duck_fishing(split, i);//check ?
-//			i--;
-//		}
-//	}
+		return (NULL);
 	return (split);
 }
 
+char	**tokenize(char *rl)
+{
+	char	**split;
+
+	split = full_split(rl);
+	if (!split)
+		return (NULL);
+	split = full_join_sign(split);
+	if (!split)
+		return (NULL);
+	return (split);
+}
 
 //corriger les espaces vides!!  ==>> parsed->(char	*echo)
 

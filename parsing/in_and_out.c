@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:15:05 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/14 17:16:09 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:48:42 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*right_op(char **split, int i, char **out)
 	return (temp);
 }
 
-int	in_and_out(char **split, t_parsed *parsed)
+int	in_and_out(char **split)
 {
 	char	*mode;
 	char	*out;
@@ -74,4 +74,46 @@ int	in_and_out(char **split, t_parsed *parsed)
 	free(mode);
 	parsed->split = split;
 	return (1);
+}
+
+
+
+char **in_and_out(char **split, t_parsed *parsed)
+{
+	int		i;
+
+	i = -1;
+	while (split[++i])
+	{
+		if (ft_strnstr(split[i], "<", 2))
+		{
+			duck_fishing(split, i);
+			i = skip_ispaces(split, i);
+			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
+			{
+				if (!split[i])
+					printf("bash: syntax error near unexpected token `newline'");
+				ft_free_arr(split, arr_size(split));
+				exit(2);
+			}
+			parsed->infile = ft_strdup(split[i]); // check
+			duck_fishing(split, i);
+			i = skip_ispaces(split, i);
+		}
+		else if (ft_strnstr(split[i], "<<", 3))
+		{
+			duck_fishing(split, i);
+			i = skip_ispaces(split, i);
+			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
+			{
+				if (!split[i])
+					printf("bash: syntax error near unexpected token `newline'");
+				ft_free_arr(split, arr_size(split));
+				exit(2);
+			}
+
+		}
+
+
+	}
 }

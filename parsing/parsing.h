@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/14 17:35:43 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:36:28 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ typedef struct s_parsed
 
 //parser
 t_parsed	*parse(char **envp, char *rl);
+int			is_problem_char(char *str);
 
 //tokenizer
 char		**tokenize(char *rl);
 
 //tokenizer_utils
-char	**split_insert_arr(char ***split, int c);
+char		**split_insert_arr(char ***split, int c);
 
 //limiter
 int			limiter(char *limiter);
 
-//struct
-t_parsed	*struct_maker(char **split);
+//in_and_out
+char		**in_and_out(char **split);
 
 //parser_utils
 int			skip_ispaces(char **split, int i);
@@ -61,7 +62,7 @@ int			check_closed(char **split, int c, int n);
 int			check_follow(char **split, char *c);
 
 //clean
-void	clean_parsed(t_parsed *parsed);
+void		clean_parsed(t_parsed *parsed);
 
 //debug
 void		show_arr(char **arr);

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/14 17:51:08 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:40:41 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**handle_env(char **envp, char **split)
 	{
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
-			if (split[skip_ispaces_(split, i - 1)] && ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<", 3)) // here problem for cat <<< "hello $USER"
+			if (split[skip_ispaces_(split, i - 1)] && ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<", 3) && !ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<<", 4))
 				break ;
 			path = get_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) + 1;//check
 			if (find_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) == arr_size(envp))
@@ -159,6 +159,9 @@ t_parsed	*parse(char **envp, char *rl)
 	if (!split)
 		return (printf("Error while handling env vars\n"), NULL);
 	split = handle_redirections(split);
+	if (!split)
+		return (printf("Error while handling redirects\n"), NULL);
+	split = in_and_out(split);
 	if (!split)
 		return (printf("Error while handling redirects\n"), NULL);
 //	parsed = struct_maker(split);

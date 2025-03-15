@@ -6,7 +6,7 @@
 #    By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/09 00:28:46 by malapoug          #+#    #+#              #
-#    Updated: 2025/03/14 17:20:46 by malapoug         ###   ########.fr        #
+#    Updated: 2025/03/14 19:25:31 by malapoug         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS_PARSING = parser.c\
 	limiter.c\
 	debug.c\
 	clean.c\
+	in_and_out.c\
 #	struct.c\
 
 SRCS = main.c\

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:17:34 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/17 01:12:20 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/17 12:45:08 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,8 @@ char	**cut_split(t_parsed *temp, char **split)
 	int	i;
 
 	i = 0;
-	while (split[++i])
-	{
-		if (ft_strnstr(split[i], "|", 2))
-
-	}
-
+	while (split[++i] && !ft_strnstr(split[i], "|", 2))
+		split++;
 	return (split);
 }
 
@@ -56,6 +52,7 @@ t_parsed	*create_chain(char **split, int n_node)
 	temp = head;
 	while (n_node > 0)
 	{
+		temp->split = split;
 		split = cut_split(temp, split);
 		temp->next = malloc(sizeof(t_parsed));
 		if (!temp->next)
@@ -66,6 +63,7 @@ t_parsed	*create_chain(char **split, int n_node)
 		temp = temp->next;
 		n_node--;
 	}
+	return (head);
 }
 
 t_parsed	*struct_maker(char **split)
@@ -73,6 +71,8 @@ t_parsed	*struct_maker(char **split)
 	t_parsed	*parsed;
 
 	parsed = create_chain(split, count_pipes(split));
+	if (!parsed)
+		return (printf("Error while creating struct\n"), NULL);
 //	if (!remove_in_out(split, parsed))
 //		return (printf("Error while creating struct\n"), NULL);
 	return (parsed);

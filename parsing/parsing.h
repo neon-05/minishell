@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/17 12:06:10 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:43:32 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ char		**split_insert_arr(char ***split, int c);
 
 //limiter
 int			limiter(char *limiter);
+
+//struct
+t_parsed	*struct_maker(char **split);
 
 //in_and_out
 char		**in_and_out(char **split);

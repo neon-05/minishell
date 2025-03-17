@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:17:34 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/17 12:45:08 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:48:10 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	count_pipes(char **split)
 	return (count);
 }
 
-char	**cut_split(t_parsed *temp, char **split)
+char	**cut_split(char **split)
 {
 	int	i;
 
@@ -53,7 +53,10 @@ t_parsed	*create_chain(char **split, int n_node)
 	while (n_node > 0)
 	{
 		temp->split = split;
-		split = cut_split(temp, split);
+		temp->infile = NULL;
+		temp->outfile = NULL;
+		temp->out_mode = NULL;
+		split = cut_split(split);
 		temp->next = malloc(sizeof(t_parsed));
 		if (!temp->next)
 		{
@@ -63,6 +66,7 @@ t_parsed	*create_chain(char **split, int n_node)
 		temp = temp->next;
 		n_node--;
 	}
+	temp->next = NULL;
 	return (head);
 }
 

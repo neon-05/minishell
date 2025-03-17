@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/14 19:40:41 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/17 00:21:46 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,12 +161,13 @@ t_parsed	*parse(char **envp, char *rl)
 	split = handle_redirections(split);
 	if (!split)
 		return (printf("Error while handling redirects\n"), NULL);
-	split = in_and_out(split);
-	if (!split)
-		return (printf("Error while handling redirects\n"), NULL);
-//	parsed = struct_maker(split);
-//	if (!parsed)
-//		return (NULL);
+	parsed = struct_maker(split);
+	if (!parsed)
+		return (NULL);
+//	split = in_and_out(split);
+//	if (!split)
+//		return (printf("Error while handling redirects\n"), NULL);
+
 //	trimm(parsed->split);
 //	show_t_parsed(parsed);
 	show_arr(split);

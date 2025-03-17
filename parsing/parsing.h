@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/14 19:36:28 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/17 00:34:35 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@
 
 typedef struct s_parsed
 {
-	char	**split;
-	char	*infile;
-	char	**outfile;
-	char	**out_mode;
+	char		**split;
+	char		*infile;
+	char		**outfile;
+	char		**out_mode;
+	s_parsed	*next;
 }	t_parsed;
 
 //====================(STRUCTS)=============================//

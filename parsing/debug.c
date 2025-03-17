@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 13:43:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/17 14:42:13 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:39:20 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	show_arr(char **arr)
 	if (!arr)
 	{
 		printf("(null)\n");
-		return;
+		return ;
 	}
 	while (arr[i])
 	{
@@ -33,17 +33,20 @@ void	show_arr(char **arr)
 
 void	show_t_parsed(t_parsed *parsed)
 {
-	while (parsed)
+	t_parsed	*temp;
+	temp = parsed;
+	while (temp)
 	{
 		printf(BLUE "\nIN T_PARSED** :\n\n" RESET);
-		printf("INFILE:\n%s\n\n", parsed->infile);
+		printf("INFILE:\n%s\n\n", temp->infile);
 		printf("OUTFILE:\n");
-		show_arr(parsed->outfile);
+		show_arr(temp->outfile);
 		printf("\nOUT_MODE:\n");
-		show_arr(parsed->out_mode);
+		show_arr(temp->out_mode);
 		printf(BLUE "\nSTR:" RESET);
 		printf("\n");
-		show_arr(parsed->split);
-		parsed = parsed->next;
+		show_arr(temp->split);
+		temp = temp->next;
+		printf("\n\n");
 	}
 }

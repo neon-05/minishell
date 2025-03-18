@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/17 14:43:32 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:13:38 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@
 
 //====================(DEFINES)=============================//
 
+//====================(STRUCTS)=============================//
 typedef struct s_parsed
 {
-	char		**split;
-	char		*infile;
-	char		**outfile;
-	char		**out_mode;
+	char			**split;
+	char			*infile;
+	char			*outfile;
+	char			*out_mode;
 	struct s_parsed	*next;
 }	t_parsed;
 
-//====================(STRUCTS)=============================//
+
 
 //====================(DECLARATIONS)========================//
 
@@ -53,7 +54,7 @@ int			limiter(char *limiter);
 t_parsed	*struct_maker(char **split);
 
 //in_and_out
-char		**in_and_out(char **split);
+int			remove_in_out(t_parsed *head);
 
 //parser_utils
 int			skip_ispaces(char **split, int i);

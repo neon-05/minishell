@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/17 18:26:13 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:31:46 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ char	**handle_redirections(char **split)
 	{
 		if (ft_strnstr(split[i], "<<<", 4))
 		{
-			duck_fishing(split, i);
-			i = skip_ispaces(split, i);
+			i = skip_ispaces(split, i + 1);
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])
@@ -110,8 +109,7 @@ char	**handle_redirections(char **split)
 		}
 		else if (ft_strnstr(split[i], "<<", 3))
 		{
-			duck_fishing(split, i);
-			i = skip_ispaces(split, i);
+			i = skip_ispaces(split, i + 1);
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])

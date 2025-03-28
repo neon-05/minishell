@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/12 12:34:23 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:54:13 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,12 +124,28 @@ char	**list_insert(char **lst1, char **lst2, int n)
 	i = -1;
 	j = -1;
 	while (++i < n)
+	{
 		new[i] = ft_strdup(lst1[i]);//check
+		free(lst1[i]);
+	}
+	free(lst1[i]);
 	while (lst2[++j])
+	{
 		new[i + j] = ft_strdup(lst2[j]);//check
+		free(lst2[j]);
+	}
+	free(lst2[j]);
+	free(lst2);
 	while (lst1[n + 1])
-		new[j + i++] = ft_strdup(lst1[n++ + 1]);//check
+	{
+		new[j + i++] = ft_strdup(lst1[n + 1]);//check
+		free(lst1[n+1]);
+		n++;
+	}
+	free(lst1[n + 1]);
+	free(lst1);
 	new[i + j] = NULL;
-	ft_free_arr(lst2, arr_size(lst2));
-	return (ft_free_arr(lst1, arr_size(lst1)), new);
+//	ft_free_arr(lst1, arr_size(lst1));
+//	ft_free_arr(lst2, arr_size(lst2));
+	return (new);
 }

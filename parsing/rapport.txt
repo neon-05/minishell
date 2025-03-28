@@ -5,8 +5,16 @@
 
 
 
+
+
+
+
+
 ajouter une commande a la fin pour supprimer le this_is_a_temporary_file_for_the_eof
 
+
+
+ajouter le trimm avant d'ecrire dans this_is_a_temporary_file_for_the_eof
 
 
 !!! cat | cat | ls

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 12:42:07 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 19:53:23 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:32:19 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ int	arr_size_i(int **arr)
 
 void	ft_free_arr(char **arr, int i)
 {
-	while (i > 0)
+	while (i > 0 && arr[i])
 		free(arr[i--]);
 	free(arr[i]);
-	free(arr);
+	if (arr)
+		free(arr);
 }
 
 void	ft_free_arr_i(int **arr, int i)

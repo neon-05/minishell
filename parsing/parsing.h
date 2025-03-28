@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/18 16:13:38 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:20:23 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_parsed
 	char			**split;
 	char			*infile;
 	char			*outfile;
-	char			*out_mode;
+	int				out_mode;
 	struct s_parsed	*next;
 }	t_parsed;
 
@@ -67,7 +67,7 @@ int			check_closed(char **split, int c, int n);
 int			check_follow(char **split, char *c);
 
 //clean
-void		clean_parsed(t_parsed *parsed);
+void	free_chain(t_parsed *head);
 
 //debug
 void		show_arr(char **arr);

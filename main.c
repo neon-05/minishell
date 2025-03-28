@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:24:35 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 19:46:33 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:41:19 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ int	main(int ac, char **av, char **envp)
 	pr = prompt(envp);
 	while (!ft_strnstr(rl, "exit", ft_strlen(rl)))// voir comment faire avec exceve pour "exit"
 	{
-		free(rl);
+		if (rl)
+			free(rl);
 		rl = readline(pr);
 		list = parse(envp, rl);
 		if (!list)
 			break ;
 		//process(list);
-		clean_parsed(list);
+		free_chain(list);
 		free(pr);
 		pr = prompt(envp);
 	}

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/18 16:31:46 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:22:09 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,18 +128,23 @@ char	**handle_redirections(char **split)
 
 void	trimm(char **split)
 {
-	int	i;
+	char	*temp;
+	int		i;
 
 	i = -1;
 	while (split[++i])
 	{
 		if (split[i][0] == '\'')
 		{
-			split[i] = ft_strtrim(split[i], "'"); // leaks
+			temp = ft_strtrim(split[i], "'");
+			free(split[i]);
+			split[i] = temp;
 		}
 		else if (split[i][0] == '"')
 		{
-			split[i] = ft_strtrim(split[i], "\""); // leaks
+			temp = ft_strtrim(split[i], "\"");
+			free(split[i]);
+			split[i] = temp;
 		}
 	}
 }
@@ -149,27 +154,22 @@ t_parsed	*parse(char **envp, char *rl)
 	char		**split;
 	t_parsed	*parsed;
 
+	(void)envp;
 	split = tokenize(rl);
 	if (!split)
 		return (printf("Error while tokenizing\n"), NULL);
-	(void)envp;
 	split = handle_env(envp, split);
 	if (!split)
-		return (printf("Error while handling env vars\n"), NULL);
+		return (printf("Error while handling env vars\n"), NULL);//free inside
 	split = handle_redirections(split);
 	if (!split)
-		return (printf("Error while handling redirects\n"), NULL);
+		return (printf("Error while handling redirects\n"), NULL);//free inside
 	parsed = struct_maker(split);
 	if (!parsed)
-		return (NULL);
-//	split = in_and_out(split);
-//	if (!split)
-//		return (printf("Error while handling redirects\n"), NULL);
-
+		return (NULL);//free inside
 //	trimm(parsed->split);
-//	show_t_parsed(parsed);
-//	show_arr(split);
-	return (parsed);
+	show_t_parsed(parsed);
+return (parsed);
 }
 
 //WARNING  "echo \$HOME"	>>	"$HOME"

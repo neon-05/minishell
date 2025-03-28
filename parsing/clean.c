@@ -6,22 +6,42 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 19:33:16 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/10 20:44:52 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:29:04 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
  #include "parsing.h"
 
-void	clean_parsed(t_parsed *parsed)
+void	clean_node(t_parsed *parsed)
 {
+	int	i;
+
+	i = 0;
 	if (!parsed)
 		return;
-	if (parsed->split)
-		ft_free_arr(parsed->split, arr_size(parsed->split));
+	while (parsed->split[i])
+		free(parsed->split[i++]);
+	free(parsed->split[i]);
 	if (parsed->infile)
 		free(parsed->infile);
 	if (parsed->outfile)
 		free(parsed->outfile);
 	if (parsed)
 		free(parsed);
+}
+
+void	free_chain(t_parsed *head)
+{
+	t_parsed	*temp;
+	char		**t;
+
+	t = head->split;
+	while (head)
+	{
+		temp = head;
+		head = head->next;
+		clean_node(temp);
+	}
+	if (t)
+		free(t);
 }

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 13:43:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/18 16:18:02 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:21:02 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	show_t_parsed(t_parsed *parsed)
 		printf(BLUE "\nNODE %d :\n\n" RESET, i++);
 		printf("INFILE:\n%s\n\n", temp->infile);
 		printf("OUTFILE:\n%s\n\n", temp->outfile);
-		printf("\nOUT_MODE:\n%s\n\n", temp->out_mode);
+		printf("\nOUT_MODE:\n%d\n\n", temp->out_mode);
 		printf(BLUE "\nSTR:" RESET);
 		printf("\n");
 		show_arr(temp->split);

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/18 15:34:05 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:42:13 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 char	**split_insert_arr(char ***split, int c)
 {
 	int		i;
+	char	**temp;
 
 	i = -1;
 	while ((*split)[++i])
 	{
-		(*split) = list_insert((*split), ft_split_let((*split)[i], c), i); // check
+		temp = ft_split_let((*split)[i], c);
+		if (!temp)
+			return (NULL); // free
+		(*split) = list_insert((*split), temp, i);
 		if (!split)
-			return (NULL);
+			return (NULL); // free
 	}
 	return (*split);
 }
@@ -42,7 +46,7 @@ char	**full_split(char *rl)
 	split = split_insert_arr(&split, '|');
 	if (!split)
 		return (ft_free_arr(split, arr_size(split)), NULL);
-	split = split_insert_arr(&split, ';');
+	split = split_insert_arr(&split, ';');//enlever ?
 	if (!split)
 		return (ft_free_arr(split, arr_size(split)), NULL);
 	split = split_insert_arr(&split, '>');
@@ -78,13 +82,20 @@ char	**full_join_sign(char **split)
 char	**tokenize(char *rl)
 {
 	char	**split;
+	int		i;
 
+	i = -1;
 	split = full_split(rl);
 	if (!split)
 		return (NULL);
 	split = full_join_sign(split);
 	if (!split)
 		return (NULL);
+	while (split[++i])
+	{
+		if (ft_strncmp(split[i], " ", 2) == 0)
+			duck_fishing(split, i--);// check ?
+	}
 	return (split);
 }
 

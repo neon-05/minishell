@@ -4,21 +4,16 @@
 |=======================================================================================|
 
 
+"'"'
 
 
-
-
-
-
-ajouter une commande a la fin pour supprimer le this_is_a_temporary_file_for_the_eof
-
-
-
-ajouter le trimm avant d'ecrire dans this_is_a_temporary_file_for_the_eof
-
+-------------------------------------------------------------------------------------------------
 
 !!! cat | cat | ls
 
+-------------------------------------------------------------------------------------------------
+
+ajouter une commande a la fin pour supprimer le this_is_a_temporary_file_for_the_eof
 
 implementer:
 
@@ -32,43 +27,83 @@ implementer:
 143 	Command terminated with signal 15 (SIGTERM) (kill command). 128+15
 
 
+-------------------------------------------------------------------------------------------------
+
+Warning Ctrl-D ==> segv
 
 
 
 
 -------------------------------------------------------------------------------------------------
+
+gnl pour le  |  et  "" on verra
+
+
+-------------------------------------------------------------------------------------------------
+
+
+┌─[l]~[/home/l/42/minishell_parsing]~o
+└─O $HOME
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==443511==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000203 (pc 0x58a8868dabfe bp 0x7ffd77ebe900 sp 0x7ffd77ebe900 T0)
+==443511==The signal is caused by a READ memory access.
+==443511==Hint: address points to the zero page.
+    #0 0x58a8868dabfe in ft_strnstr (/home/l/42/minishell_parsing/minishell+0x4bfe) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #1 0x58a8868d7aa9 in handle_env (/home/l/42/minishell_parsing/minishell+0x1aa9) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #2 0x58a8868d8216 in parse (/home/l/42/minishell_parsing/minishell+0x2216) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #3 0x58a8868d726b in main (/home/l/42/minishell_parsing/minishell+0x126b) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #4 0x7fcc7cabde07  (/usr/lib/libc.so.6+0x25e07) (BuildId: aed3a2b0cf4e6cc12296052529af22f6a450a75a)
+    #5 0x7fcc7cabdecb in __libc_start_main (/usr/lib/libc.so.6+0x25ecb) (BuildId: aed3a2b0cf4e6cc12296052529af22f6a450a75a)
+    #6 0x58a8868d7134 in _start (/home/l/42/minishell_parsing/minishell+0x1134) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV (/home/l/42/minishell_parsing/minishell+0x4bfe) (BuildId: c67114299d7433358b3c9e576352b68f4c992748) in ft_strnstr
+==443511==ABORTING
+
+
+-------------------------------------------------------------------------------------------------
+
 
 
 
 
 ┌─[l]~[/home/l/42/minishell_parsing]~o
-└─O <<  cfs
-AddressSanitizer:DEADLYSIGNAL
+└─O ad  >
+
+=================================================================
+==443095==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 3 byte(s) in 1 object(s) allocated from:
+    #0 0x7915fab8d891 in malloc /usr/src/debug/gcc/gcc/libsanitizer/asan/asan_malloc_linux.cpp:69
+    #1 0x5a844373e78a in ft_strdup (/home/l/42/minishell_parsing/minishell+0x478a) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #2 0x5a844373ce39 in list_insert (/home/l/42/minishell_parsing/minishell+0x2e39) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #3 0x5a844373c49a in split_insert_arr (/home/l/42/minishell_parsing/minishell+0x249a) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #4 0x5a844373c681 in full_split (/home/l/42/minishell_parsing/minishell+0x2681) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #5 0x5a844373c830 in tokenize (/home/l/42/minishell_parsing/minishell+0x2830) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #6 0x5a844373c1df in parse (/home/l/42/minishell_parsing/minishell+0x21df) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #7 0x5a844373b26b in main (/home/l/42/minishell_parsing/minishell+0x126b) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+    #8 0x7915fa86ee07  (/usr/lib/libc.so.6+0x25e07) (BuildId: aed3a2b0cf4e6cc12296052529af22f6a450a75a)
+    #9 0x7915fa86eecb in __libc_start_main (/usr/lib/libc.so.6+0x25ecb) (BuildId: aed3a2b0cf4e6cc12296052529af22f6a450a75a)
+    #10 0x5a844373b134 in _start (/home/l/42/minishell_parsing/minishell+0x1134) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
+
+SUMMARY: AddressSanitizer: 3 byte(s) leaked in 1 allocation(s).
+
+┌─[l @ frigo]-[minishell_parsing]-[ parsing]-✖
+└──>cat main.c >
+zsh: parse error near `\n'
+
+
+
+
+
+
+
 
 
 -------------------------------------------------------------------------------------------------
-
-
-┌─[l @ frigo][ parsing][!?][C v14.2.1-gcc]
-└─[minishell_parsing]─✖ >> test					<=== gnl while not ctrl D signal
-
-
+--------------------------------------------DONE-------------------------------------------------
 -------------------------------------------------------------------------------------------------
-
-
-chaenger la struct en char **ouput et char **out_mode pour gerer les doubles output
-
-cat <<< "hello" >> cat >> test		<== censer rediriger l'output vers les deux mais actuellement que le deuxieme
-
-
--------------------------------------------------------------------------------------------------
-
-
-Warning Ctrl-D ==> segv
-
-
--------------------------------------------------------------------------------------------------
-
 
 ┌─[l]~[/home/l/42/test]~o
 └─O cat << lim1 << lim2
@@ -76,19 +111,43 @@ hello
 lim1
 world
 lim2
-cat	this_is_a_temporary_file_for_the_eof	this_is_a_temporary_file_for_the_eof	<== out
+
+
+└─O cat	this_is_a_temporary_file_for_the_eof		<== out
 
 Suposed to be in this_is_a_temporary_file_for_the_eof:
-hello
 world
 
 Is in this_is_a_temporary_file_for_the_eof:
-world
+world																							✓
 
 
 -------------------------------------------------------------------------------------------------
---------------------------------------------DONE-------------------------------------------------
+
+cat <<< "hello" >> cat >> test		<== censer rediriger l'output vers le dernier seulement		✓
+
+
 -------------------------------------------------------------------------------------------------
+
+
+
+
+
+ajouter le trimm avant d'ecrire dans this_is_a_temporary_file_for_the_eof						✓
+
+
+
+
+-------------------------------------------------------------------------------------------------
+
+
+┌─[l @ frigo][ parsing][!?][C v14.2.1-gcc]
+└─[minishell_parsing]─✖ >> test																	✓
+
+
+
+-------------------------------------------------------------------------------------------------
+
 
 cat << EOF | wc -l >> out        =========>>            cat	<<	EOF	|	wc	-l	>>	out			✓
 

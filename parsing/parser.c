@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/28 20:22:09 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:40:17 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*replace_var(char *str, char *path)
 
 int	is_problem_char(char *str)
 {
-	if (str[0] == '\'' || str[0] == ')' \
+	if (str[0] == ')' \
 		|| str[0] == '}' || str[0] == '<' || str[0] == '>')
 	{
 		printf("bash: syntax error near unexpected token `%c'\n", (str[0])); // pas le bon fd (c'est grave chef?)
@@ -57,7 +57,7 @@ char	**handle_env(char **envp, char **split)
 	{
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
-			if (split[skip_ispaces_(split, i - 1)] && ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<", 3) && !ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<<", 4))
+			if (split[skip_ispaces_(split, i - 1)] && (i - 1 >= 0) && ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<", 3) && !ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<<", 4))
 				break ;
 			path = get_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) + 1;//check
 			if (find_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) == arr_size(envp))
@@ -97,13 +97,16 @@ char	**handle_redirections(char **split)
 				ft_free_arr(split, arr_size(split));
 				exit(2);
 			}
-			fd = open("./this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY, 0777);//verifier que ca marche selon les droits de l'executable
+			fd = open("./.this_is_a_temporary_file_for_the_eof", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY, 0777);//verifier que ca marche selon les droits de l'executable
 			if (fd < 0)
 				return (ft_free_arr(split, arr_size(split)), printf("Error opening files of LIMITER\n"), NULL);
+			split[i] = trimm(split[i]);
+			if (!split[i])
+				return (NULL); //free
 			write(fd, split[i], ft_strlen(split[i])); //check
 			close(fd);
 			free(split[i]);
-			split[i] = ft_strdup("this_is_a_temporary_file_for_the_eof");
+			split[i] = ft_strdup(".this_is_a_temporary_file_for_the_eof");
 			if (!split[i])
 				return (ft_free_arr(split, arr_size(split)), NULL);
 		}
@@ -118,7 +121,7 @@ char	**handle_redirections(char **split)
 				exit(2);
 			}
 			limiter(split[i]);
-			split[i] = ft_strdup("this_is_a_temporary_file_for_the_eof");
+			split[i] = ft_strdup(".this_is_a_temporary_file_for_the_eof");
 			if (!split[i])
 				return (ft_free_arr(split, arr_size(split)), NULL);
 		}
@@ -126,39 +129,16 @@ char	**handle_redirections(char **split)
 	return (split);
 }
 
-void	trimm(char **split)
-{
-	char	*temp;
-	int		i;
-
-	i = -1;
-	while (split[++i])
-	{
-		if (split[i][0] == '\'')
-		{
-			temp = ft_strtrim(split[i], "'");
-			free(split[i]);
-			split[i] = temp;
-		}
-		else if (split[i][0] == '"')
-		{
-			temp = ft_strtrim(split[i], "\"");
-			free(split[i]);
-			split[i] = temp;
-		}
-	}
-}
-
 t_parsed	*parse(char **envp, char *rl)
 {
 	char		**split;
 	t_parsed	*parsed;
 
-	(void)envp;
 	split = tokenize(rl);
 	if (!split)
 		return (printf("Error while tokenizing\n"), NULL);
 	split = handle_env(envp, split);
+	printf("AAAAAAAAAAAAAAA`");
 	if (!split)
 		return (printf("Error while handling env vars\n"), NULL);//free inside
 	split = handle_redirections(split);

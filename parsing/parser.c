@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/01 15:40:17 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:54:16 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**handle_env(char **envp, char **split)
 	{
 		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
-			if (split[skip_ispaces_(split, i - 1)] && (i - 1 >= 0) && ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<", 3) && !ft_strnstr(split[skip_ispaces_(split, i - 1)], "<<<", 4))
+			if (split[skip_ispaces_(split, i)] && (i >= 0) && ft_strnstr(split[skip_ispaces_(split, i)], "<<", 3) && !ft_strnstr(split[skip_ispaces_(split, i)], "<<<", 4))
 				break ;
 			path = get_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) + 1;//check
 			if (find_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) == arr_size(envp))

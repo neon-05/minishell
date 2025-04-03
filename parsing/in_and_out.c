@@ -6,26 +6,11 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:15:05 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/26 16:20:06 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/03 01:37:15 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-char	*right_op(char **split, int i, char **out)
-{
-	char	*temp;
-
-	if (ft_strnstr(split[i], ">", 2))
-		temp = ft_strdup("O_WRONLY"); // check
-	else
-		temp= ft_strdup("O_APPEND"); // check
-	duck_fishing(split, i);
-	(*out) = ft_strjoin_f((*out), ","); // check ?
-	(*out) = ft_strjoin((*out), split[i]); // check ?
-	duck_fishing(split, i);
-	return (temp);
-}
 
 char **in(t_parsed *node, char **split)
 {
@@ -37,7 +22,6 @@ char **in(t_parsed *node, char **split)
 		if (ft_strnstr(split[i], "<", 2))
 		{
 			duck_fishing(split, i);
-			i = skip_ispaces(split, i);
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])
@@ -51,7 +35,6 @@ char **in(t_parsed *node, char **split)
 		else if (ft_strnstr(split[i], "<<", 3))
 		{
 			duck_fishing(split, i);
-			i = skip_ispaces(split, i);
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])
@@ -74,7 +57,6 @@ char **out(t_parsed *node, char **split)
 		if (ft_strnstr(split[i], ">", 2))
 		{
 			duck_fishing(split, i);
-			i = skip_ispaces(split, i);
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])
@@ -89,7 +71,6 @@ char **out(t_parsed *node, char **split)
 		else if (ft_strnstr(split[i], ">>", 3))
 		{
 			duck_fishing(split, i);
-			i = skip_ispaces(split, i);
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])

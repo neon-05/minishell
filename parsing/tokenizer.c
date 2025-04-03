@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/28 20:42:13 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/03 01:29:46 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ char	**full_join_sign(char **split)
 {
 	if (total_occ(split, '\"') % 2 != 0 || total_occ(split, '\'') % 2 != 0) // gerer " ' " '
 		ft_putstr_fd(RED "[ツ] Unclosed quote !\n" RESET, 2);
-	if (!check_closed(split, '"', 2))
-		return (NULL);
-	if (!check_closed(split, '\'', 2))
+	if (!check_closed(split, 2))
 		return (NULL);
 	if (!check_follow(split, "<"))
 		return (NULL);

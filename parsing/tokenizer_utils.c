@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/28 20:54:13 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:38:47 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	check_follow(char **split, char *c)
 			if (!split[i])
 				return (0);
 			duck_fishing(split, i + 1);
-			size--;
+			size = arr_size(split);
 		}
 		else
 			i++;
@@ -83,28 +83,65 @@ int	check_follow(char **split, char *c)
 	return (1);
 }
 
-int	check_closed(char **split, int c, int n)
+int	quote_gnl(char **split, int	n)
+{
+	char	*temp;
+	int		count_s;
+	int		count_d;
+	int		i;
+
+	i = arr_size(split) - 1;
+	count_s = count_occ(split[i], '\'');
+	count_d = count_occ(split[i], '\"');
+	if (split[i] && ((count_s % n != 0 && split[i][0] == '\'' && split[i][ft_strlen(split[i])] != '\'')\
+		|| (count_d % n != 0 && split[i][0] == '\"' && split[i][ft_strlen(split[i])] != '\"')))
+	{
+	temp = ft_strdup("");//check
+		while(ft_strchr(temp, split[i][0]) == 0)
+		{
+			free(temp);
+			temp = readline("");// attention au signal Ctrl-D
+			temp = ft_strjoin_f(temp, "\\n");//
+			if (!temp)//free
+				return (0);
+			split[i] = ft_strjoin_f(split[i], temp);
+			if (!split[i])
+				return (0);
+		}
+		free(temp);
+		temp = split[i];
+		split[i] = ft_strtrim(split[i], "\\n");
+		free(temp);
+	}
+	return (1);
+}
+
+int	check_closed(char **split, int n)
 {
 	int		size;
 	int		i;
-	int		count;
+	int		count_s;
+	int		count_d;
 
 	size = arr_size(split);
 	i = 0;
 	while (i <= size)
 	{
-		count = count_occ(split[i], c);
-		if ((count % 10) % n != 0 && split[i + 1])
+		count_s = count_occ(split[i], '\'');
+		count_d = count_occ(split[i], '\"');
+		if (split[i] && split[i + 1] && ((count_s % n != 0 && split[i][0] == '\'' && split[i][ft_strlen(split[i])] != '\'') || (count_d % n != 0 && split[i][0] == '\"' && split[i][ft_strlen(split[i])] != '\"')))
 		{
 			split[i] = ft_strjoin_f(split[i], split[i + 1]);
 			if (!split[i])
 				return (0);
 			duck_fishing(split, i + 1);
-			size--;
+			size = arr_size(split);
 		}
 		else
 			i++;
 	}
+	if (!quote_gnl(split, n))
+		return (0);
 	return (1);
 }
 
@@ -145,7 +182,5 @@ char	**list_insert(char **lst1, char **lst2, int n)
 	free(lst1[n + 1]);
 	free(lst1);
 	new[i + j] = NULL;
-//	ft_free_arr(lst1, arr_size(lst1));
-//	ft_free_arr(lst2, arr_size(lst2));
 	return (new);
 }

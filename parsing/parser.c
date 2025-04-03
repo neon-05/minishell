@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/01 16:54:16 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/03 01:38:16 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*replace_var(char *str, char *path)
 		i++;
 	while (str[i + j] && str[i + j] != ' ' && ft_isalpha(str[i + j]))
 		j++;
+	ft_strlen(path);
 	n = ft_calloc(1, sizeof(char) * (ft_strlen(str) - j + ft_strlen(path) + 1));
 	if (!n)
 		return (NULL);
@@ -55,20 +56,20 @@ char	**handle_env(char **envp, char **split)
 	path = NULL;
 	while (split[++i])
 	{
-		while (split[i][0] != '\'' && count_occ(split[i], '$') != 0)
+		while (split[i] && split[i][0] != '\'' && count_occ(split[i], '$') != 0)
 		{
-			if (split[skip_ispaces_(split, i)] && (i >= 0) && ft_strnstr(split[skip_ispaces_(split, i)], "<<", 3) && !ft_strnstr(split[skip_ispaces_(split, i)], "<<<", 4))
+			if (ft_strnstr(split[i], "<<", 3) && !ft_strnstr(split[i], "<<<", 4))
 				break ;
-			path = get_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) + 1;//check
-			if (find_envp(envp, ft_strchr(split[skip_ispaces(split, i)], '$') + 1) == arr_size(envp))
-				temp = replace_var(split[skip_ispaces(split, i)], "");//free path
+			path = get_envp(envp, ft_strchr(split[i], '$') + 1);//check
+			if (!path)//find_envp(envp, ft_strchr(split[i], '$') + 1) == arr_size(envp))
+				temp = replace_var(split[i], "");//free path
 			else
-				temp = replace_var(split[skip_ispaces(split, i)], path);
+				temp = replace_var(split[i], path + 1);
 			if (!temp)
 				return (ft_free_arr(split, arr_size(split)), NULL);
-			free(split[skip_ispaces(split, i)]);
-			split[skip_ispaces(split, i)] = temp;
-			split = list_insert(split, tokenize(split[skip_ispaces(split, i)]), skip_ispaces(split, i)); // check
+			free(split[i]);
+			split[i] = temp;
+			split = list_insert(split, tokenize(split[i]), i); // check
 		}
 	}
 	return (split);
@@ -89,7 +90,6 @@ char	**handle_redirections(char **split)
 	{
 		if (ft_strnstr(split[i], "<<<", 4))
 		{
-			i = skip_ispaces(split, i + 1);
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])
@@ -112,7 +112,6 @@ char	**handle_redirections(char **split)
 		}
 		else if (ft_strnstr(split[i], "<<", 3))
 		{
-			i = skip_ispaces(split, i + 1);
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])
@@ -138,7 +137,6 @@ t_parsed	*parse(char **envp, char *rl)
 	if (!split)
 		return (printf("Error while tokenizing\n"), NULL);
 	split = handle_env(envp, split);
-	printf("AAAAAAAAAAAAAAA`");
 	if (!split)
 		return (printf("Error while handling env vars\n"), NULL);//free inside
 	split = handle_redirections(split);

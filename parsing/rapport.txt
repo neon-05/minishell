@@ -39,33 +39,8 @@ Warning Ctrl-D ==> segv
 gnl pour le  |  et  "" on verra
 
 
--------------------------------------------------------------------------------------------------
-
-
-┌─[l]~[/home/l/42/minishell_parsing]~o
-└─O $HOME
-AddressSanitizer:DEADLYSIGNAL
-=================================================================
-==443511==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000203 (pc 0x58a8868dabfe bp 0x7ffd77ebe900 sp 0x7ffd77ebe900 T0)
-==443511==The signal is caused by a READ memory access.
-==443511==Hint: address points to the zero page.
-    #0 0x58a8868dabfe in ft_strnstr (/home/l/42/minishell_parsing/minishell+0x4bfe) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
-    #1 0x58a8868d7aa9 in handle_env (/home/l/42/minishell_parsing/minishell+0x1aa9) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
-    #2 0x58a8868d8216 in parse (/home/l/42/minishell_parsing/minishell+0x2216) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
-    #3 0x58a8868d726b in main (/home/l/42/minishell_parsing/minishell+0x126b) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
-    #4 0x7fcc7cabde07  (/usr/lib/libc.so.6+0x25e07) (BuildId: aed3a2b0cf4e6cc12296052529af22f6a450a75a)
-    #5 0x7fcc7cabdecb in __libc_start_main (/usr/lib/libc.so.6+0x25ecb) (BuildId: aed3a2b0cf4e6cc12296052529af22f6a450a75a)
-    #6 0x58a8868d7134 in _start (/home/l/42/minishell_parsing/minishell+0x1134) (BuildId: c67114299d7433358b3c9e576352b68f4c992748)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV (/home/l/42/minishell_parsing/minishell+0x4bfe) (BuildId: c67114299d7433358b3c9e576352b68f4c992748) in ft_strnstr
-==443511==ABORTING
-
 
 -------------------------------------------------------------------------------------------------
-
-
-
 
 
 ┌─[l]~[/home/l/42/minishell_parsing]~o

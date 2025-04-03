@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/31 15:58:36 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/03 01:47:47 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char		**tokenize(char *rl);
 char		**split_insert_arr(char ***split, int c);
 
 //limiter
+int			get_line(char **line);
 int			limiter(char *limiter);
 
 //struct
@@ -58,15 +59,13 @@ int			remove_in_out(t_parsed *head);
 
 //parser_utils
 char		*trimm(char *split);
-int			skip_ispaces(char **split, int i);
-int			skip_ispaces_(char **split, int i);
 
 //tokenizer_utils
 char		**list_insert(char **lst1, char **lst2, int n);
 void		duck_fishing(char **split, int i);
 int			count_occ(char *str, int c);
 int			total_occ(char **split, int c);
-int			check_closed(char **split, int c, int n);
+int			check_closed(char **split, int n);
 int			check_follow(char **split, char *c);
 
 //clean

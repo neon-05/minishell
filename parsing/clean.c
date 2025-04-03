@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 19:33:16 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/28 20:29:04 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:16:21 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	clean_node(t_parsed *parsed)
 	i = 0;
 	if (!parsed)
 		return;
-	while (parsed->split[i])
+	while (parsed->split && parsed->split[i])
 		free(parsed->split[i++]);
 	free(parsed->split[i]);
 	if (parsed->infile)

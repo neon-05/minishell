@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:15:05 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/03 01:37:15 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:15:06 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ char **in(t_parsed *node, char **split)
 			{
 				if (!split[i])
 					printf("bash: syntax error near unexpected token `newline'");
-				ft_free_arr(split, arr_size(split));
-				exit(2);
+				return (NULL);
 			}
 			node->infile = ft_strdup(split[i]); // check
 			duck_fishing(split, i);
@@ -39,8 +38,7 @@ char **in(t_parsed *node, char **split)
 			{
 				if (!split[i])
 					printf("bash: syntax error near unexpected token `newline'");
-				ft_free_arr(split, arr_size(split));
-				exit(2);
+				return (NULL);
 			}
 		}
 	}
@@ -61,12 +59,13 @@ char **out(t_parsed *node, char **split)
 			{
 				if (!split[i])
 					printf("bash: syntax error near unexpected token `newline'");
-				ft_free_arr(split, arr_size(split));
-				exit(2);
+				node->outfile = ft_strdup("/dev/null"); // check
+				node->out_mode = O_WRONLY;
+				continue;
 			}
 			node->outfile = ft_strdup(split[i]); // check
 			node->out_mode = O_WRONLY;
-			duck_fishing(split, i);
+			duck_fishing(split, i--);
 		}
 		else if (ft_strnstr(split[i], ">>", 3))
 		{
@@ -75,12 +74,13 @@ char **out(t_parsed *node, char **split)
 			{
 				if (!split[i])
 					printf("bash: syntax error near unexpected token `newline'");
-				ft_free_arr(split, arr_size(split));
-				exit(2);
+				node->outfile = ft_strdup("/dev/null"); // check
+				node->out_mode = O_APPEND;
+				continue;
 			}
 			node->outfile = ft_strdup(split[i]); // check
 			node->out_mode = O_APPEND;
-			duck_fishing(split, i);
+			duck_fishing(split, i--);
 		}
 	}
 	return (split);

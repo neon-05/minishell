@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/03 15:43:51 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:53:24 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_follow(char **split, char *c)
 
 int	quote_gnl(char **split, int	n)
 {
-	char	*temp;
+//	char	*temp;
 	int		count_s;
 	int		count_d;
 	int		i;
@@ -93,9 +93,23 @@ int	quote_gnl(char **split, int	n)
 	i = arr_size(split) - 1;
 	count_s = count_occ(split[i], '\'');
 	count_d = count_occ(split[i], '\"');
-	if (split[i] && ((count_s % n != 0 && split[i][0] == '\'' && split[i][ft_strlen(split[i])] != '\'')\
-		|| (count_d % n != 0 && split[i][0] == '\"' && split[i][ft_strlen(split[i])] != '\"')))
+	if (split[i] && (count_d % n != 0 && split[i][0] == '\"' && split[i][ft_strlen(split[i])] != '\"'))
 	{
+		printf(RED "[ツ] Unclosed quote !\n" RESET);
+		printf("We closed it with: %c\n", '"');
+		split[i] = ft_strjoin_f(split[i], "\"");
+		if (!split[i])
+			return (0);
+	}
+	if (split[i] && (count_s % n != 0 && split[i][0] == '\'' && split[i][ft_strlen(split[i])] != '\''))
+	{
+		printf(RED "[ツ] Unclosed quote !\n" RESET);
+		printf("We closed it with: %c\n", '\'');
+		split[i] = ft_strjoin_f(split[i], "'");
+		if (!split[i])
+			return (0);
+	}
+/*	{
 	temp = ft_strdup("");//check
 		while(ft_strchr(temp, split[i][0]) == 0)
 		{
@@ -112,7 +126,7 @@ int	quote_gnl(char **split, int	n)
 		temp = split[i];
 		split[i] = ft_strtrim(split[i], "\\n");
 		free(temp);
-	}
+	}*/
 	return (1);
 }
 

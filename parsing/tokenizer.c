@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/03 15:50:27 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:39:17 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ char	**full_join_sign(char **split)
 		return (NULL);
 	if (!check_follow(split, ">"))
 		return (NULL);
-	if (!check_follow(split, "|"))
-		return (NULL);
-	if (!check_follow(split, "&"))
-		return (NULL);
 	if (!check_follow(split, "$"))
 		return (NULL);
 	return (split);
@@ -91,6 +87,26 @@ char	**tokenize(char *rl)
 	{
 		if (ft_strncmp(split[i], " ", 2) == 0)
 			duck_fishing(split, i--);// check ?
+	}
+	i = -1;
+	while (split[++i])
+	{
+		if (ft_strncmp(split[i], "|", 2) == 0 && split[i + 1] && ft_strncmp(split[i + 1], "|", 2) == 0)
+		{
+			printf("bash: syntax error near unexpected token `%c'\n", (split[i][0])); // pas le bon fd (c'est grave chef?)
+			return (ft_free_arr(split, arr_size(split)),  NULL);
+		}
+	}
+	i = -1;
+	while (split[++i])
+	{
+		if (ft_strncmp(split[i], "$", 2) == 0 && split[i + 1] && ft_strncmp(split[i + 1], "?", 2) == 0)
+		{
+			split[i] = ft_strjoin_f(split[i], split[i + 1]);
+			if (!split[i])
+				return (ft_free_arr(split, arr_size(split)),  NULL);
+			duck_fishing(split, i + 1);
+		}
 	}
 	return (split);
 }

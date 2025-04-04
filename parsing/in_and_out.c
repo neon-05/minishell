@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:15:05 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/03 16:15:06 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:34:55 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char **in(t_parsed *node, char **split)
 					printf("bash: syntax error near unexpected token `newline'");
 				return (NULL);
 			}
+			limiter(split[i]);
+			duck_fishing(split, i);
 		}
 	}
 	return (split);

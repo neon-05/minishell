@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/03 01:38:16 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:49:16 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*replace_var(char *str, char *path)
 		i++;
 	while (str[i + j] && str[i + j] != ' ' && ft_isalpha(str[i + j]))
 		j++;
-	ft_strlen(path);
 	n = ft_calloc(1, sizeof(char) * (ft_strlen(str) - j + ft_strlen(path) + 1));
 	if (!n)
 		return (NULL);
@@ -38,7 +37,7 @@ char	*replace_var(char *str, char *path)
 int	is_problem_char(char *str)
 {
 	if (str[0] == ')' \
-		|| str[0] == '}' || str[0] == '<' || str[0] == '>')
+		|| str[0] == '}' || str[0] == '<' || str[0] == '>' || str[0] == '|')
 	{
 		printf("bash: syntax error near unexpected token `%c'\n", (str[0])); // pas le bon fd (c'est grave chef?)
 		return (1);
@@ -90,6 +89,11 @@ char	**handle_redirections(char **split)
 	{
 		if (ft_strnstr(split[i], "<<<", 4))
 		{
+			free(split[i]);
+			split[i] = ft_strdup("<");
+			if (!split[i])
+				return (ft_free_arr(split, arr_size(split)), NULL);
+			i++;
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])
@@ -112,6 +116,11 @@ char	**handle_redirections(char **split)
 		}
 		else if (ft_strnstr(split[i], "<<", 3))
 		{
+			free(split[i]);
+			split[i] = ft_strdup("<");
+			if (!split[i])
+				return (ft_free_arr(split, arr_size(split)), NULL);
+			i++;
 			if (!split[i] || (split[i] && is_problem_char(split[i]) == 1))
 			{
 				if (!split[i])

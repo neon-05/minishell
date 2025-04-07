@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   microshell.c                                       :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:01:46 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/07 11:11:18 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:02:27 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "microshell.h"
+#include "minishell.h"
 
 char	**arrdup(char **arr)
 {
@@ -46,24 +46,18 @@ void	sa(int sig)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*arg1[] = {"cd", "libft", NULL};
-	char		*arg2[] = {"pwd", NULL};
-	t_parsed	cmd2 = {.fds = {0,1}, .split = arg2, .next = NULL, .infile = NULL, .outfile = NULL};
-	t_parsed	cmd1 = {.fds = {0,1}, .split = arg1, .next = NULL, .infile = NULL, .outfile = NULL};
+	char		*arg1[] = {"./helloworld", NULL};
+	char		*arg2[] = {"cat", "-e", NULL};
+	t_parsed	cmd2 = {.fds = {0,1}, .split = arg2, .next = NULL, .infile = NULL, .outfile = NULL, .out_mode = O_WRONLY};
+	t_parsed	cmd1 = {.fds = {0,1}, .split = arg1, .next = &cmd2, .infile = NULL, .outfile = NULL};
 	char		**e = arrdup(envp);
 	if (!e)
 		return (-1);
 	int		status;
-	pid_t	cpid;
 	signal(SIGINT, sa);
 	signal(SIGQUIT, sa);
-	
-	cpid = exe_pipeline(&cmd1, &e, &status);
-	if (cpid)
-		waitpid(cpid, &status, 0);
-	cpid = exe_pipeline(&cmd2, &e, &status);
-	if (cpid)
-		waitpid(cpid, &status, 0);
+	write(1,">$ ",3);
+	exe_pipeline(&cmd1, &e, &status);
 	free_arr((void **)e, arrlen((void **)e));
 	printf("exit status - %i\n", status);
 	return (0);

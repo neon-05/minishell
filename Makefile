@@ -7,8 +7,11 @@ LFLAGS = -lreadline -L$(LDIR)
 
 RM = rm -f
 
-NAME = microshell
+NAME = minishell
 LIB = libft/libft.a
+
+TESTEXE = helloworld
+TESTSRC = helloworld.c
 
 SRCS = \
 	builtins/builtins.c \
@@ -20,13 +23,13 @@ SRCS = \
 	builtins/ft_unset.c \
 	exec.c \
 	exec_utils.c \
-	microshell.c \
+	minishell.c \
 	vars.c \
 
 OBJS = $(SRCS:.c=.o)
 LDIR = $(dir $(LIB))
 
-all: $(NAME)
+all: $(NAME) $(TESTEXE)
 
 $(NAME): $(OBJS) $(LIB)
 	$(CC) $(OBJS) $(LIB) $(LFLAGS) -o $(NAME)
@@ -34,8 +37,11 @@ $(NAME): $(OBJS) $(LIB)
 debug: $(OBJS) $(LIB)
 	$(CC) $(DEBUG) $(OBJS) $(LIB) $(LFLAGS) -o $(NAME)
 
+$(TESTEXE): $(TESTSRC)
+	$(CC) $(TESTSRC) -o $@
+
 %.a:
-	$(MAKE) bonus -C $(dir $@)
+	$(MAKE) -C $(dir $@)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -47,7 +53,7 @@ clean:
 
 fclean:
 	$(MAKE) fclean -C $(LDIR)
-	$(RM) $(OBJS) $(NAME)
+	$(RM) $(OBJS) $(NAME) $(TESTEXE)
 
 re: fclean all
 

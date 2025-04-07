@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:19:51 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/07 11:09:50 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:02:46 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXEC_H
 
 # include "builtins/builtins.h"
-# include "microshell.h"
+#include "minishell.h"
 
 # define EXIT_SYSERROR 125
 # define EXIT_PERMISSION 126

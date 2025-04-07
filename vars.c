@@ -6,11 +6,11 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:03:15 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/07 11:09:25 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:03:16 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "minishell.h"
 
 size_t	idlen(char const *s)
 {

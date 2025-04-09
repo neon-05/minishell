@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   microshell.h                                       :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:00:12 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/07 10:32:01 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:54:30 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MICROSHELL_H
-# define MICROSHELL_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <libft.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <signal.h>
+# include <string.h>
 # include <sys/wait.h>
 # include "exec.h"
 

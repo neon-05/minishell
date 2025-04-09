@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:19:51 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/07 15:02:46 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:51:41 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXEC_H
 
 # include "builtins/builtins.h"
-#include "minishell.h"
+# include "minishell.h"
 
 # define EXIT_SYSERROR 125
 # define EXIT_PERMISSION 126
@@ -35,7 +35,8 @@ int		idsep(char *s);
 size_t	sepchr(char **a);
 char	*pathcat(const char *path, const char *rel);
 void	free_arr(void **arr, size_t l);
-pid_t	exe_pipeline(t_parsed *cmd, char ***envp, int *status);
+void	exe_pipeline(t_parsed *cmd, char ***envp, int *status);
+int		open_pipe(t_parsed *cmd);
 
 int		setvar(char const *var, char ***vars);
 int		setvar_join(char const *prefix, char const *val, char ***vars);

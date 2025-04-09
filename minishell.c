@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:01:46 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/07 15:02:27 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:38:35 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,25 @@ char	**arrdup(char **arr)
 
 void	sa(int sig)
 {
-	fprintf(stderr, "caught signal %i\n", sig);
+	write(STDERR_FILENO, "\n", 1);
+	sig++;
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*arg1[] = {"./helloworld", NULL};
+	char		*arg1[] = {"cat", "-e", NULL};
 	char		*arg2[] = {"cat", "-e", NULL};
 	t_parsed	cmd2 = {.fds = {0,1}, .split = arg2, .next = NULL, .infile = NULL, .outfile = NULL, .out_mode = O_WRONLY};
-	t_parsed	cmd1 = {.fds = {0,1}, .split = arg1, .next = &cmd2, .infile = NULL, .outfile = NULL};
+	t_parsed	cmd1 = {.fds = {0,1}, .split = arg1, .next = NULL, .infile = NULL, .outfile = NULL, .out_mode = O_WRONLY};
 	char		**e = arrdup(envp);
 	if (!e)
 		return (-1);
 	int		status;
 	signal(SIGINT, sa);
 	signal(SIGQUIT, sa);
-	write(1,">$ ",3);
 	exe_pipeline(&cmd1, &e, &status);
+	fprintf(stderr, "exit status - %i\n", status);
 	free_arr((void **)e, arrlen((void **)e));
-	printf("exit status - %i\n", status);
 	return (0);
 	cmd2.fds[0]++;
 	argc++;

@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 21:37:50 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/07 11:16:12 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:54:42 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	ft_pwd(void)
 {
 	char	*buf;
+
 	buf = getcwd(NULL, 0);
 	if (!buf)
 		return (EXIT_SYSERROR);

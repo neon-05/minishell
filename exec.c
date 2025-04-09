@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:01:18 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/07 15:00:43 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:41:21 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ pid_t	exe_cmd_fork(t_parsed *cmd, char ***envp, int *status)
 	char	*path;
 
 	path = find_exe(cmd->split[0], *envp);
+	if (!path && !is_builtin(cmd->split[0]))
+		return (-1);
 	cpid = fork();
 	if (cpid == -1)
 		*status = EXIT_SYSERROR;
@@ -75,12 +77,23 @@ pid_t	exe_cmd_fork(t_parsed *cmd, char ***envp, int *status)
 	return (cpid);
 }
 
+void	error(void)
+{
+	perror("msh");
+}
+
 pid_t	exe_cmd(t_parsed *cmd, char ***envp, int forkctl, int *status)
 {
 	if (cmd->infile)
 		cmd->fds[0] = open(cmd->infile, O_RDONLY);
 	if (cmd->outfile)
 		cmd->fds[1] = open(cmd->outfile, cmd->out_mode | O_CREAT, 0666);
+	if (cmd->fds[0] < 0 || cmd->fds[1] < 0)
+	{
+		*status = EXIT_SYSERROR;
+		error();
+		return (-1);
+	}
 	if (forkctl || !is_builtin(cmd->split[0]))
 		return (exe_cmd_fork(cmd, envp, status));
 	else
@@ -88,31 +101,31 @@ pid_t	exe_cmd(t_parsed *cmd, char ***envp, int forkctl, int *status)
 	return (0);
 }
 
-int	exe_pipeline(t_parsed *cmd, char ***envp, int *status)
+void	exe_pipeline(t_parsed *cmd, char ***envp, int *status)
 {
 	pid_t	cpid;
-	int		pfds[2];
 
+	cpid = -1;
 	if (!cmd->next)
 		cpid = exe_cmd(cmd, envp, 0, status);
 	else
+	{
 		while (cmd)
 		{
-			if (cmd->next)
+			if (open_pipe(cmd))
 			{
-				if (pipe(pfds))
-					*status = EXIT_SYSERROR;
-				else
-				{
-					cmd->fds[1] = pfds[1];
-					cmd->next->fds[0] = pfds[0];
-				}
+				*status = EXIT_SYSERROR;
+				break ;
 			}
 			cpid = exe_cmd(cmd, envp, 1, status);
-			close(pfds[1]);
+			close(cmd->fds[1]);
 			cmd = cmd->next;
 		}
-	if (cpid)
-		waitpid(cpid, status, 0);
-	return (*status);
+	}
+	if (cpid < 0)
+		error();
+	if (cpid > 0)
+		waitpid(cpid, status, WUNTRACED);
+	if (*status > 128)
+		fprintf(stderr, "%s (core dumped)\n", strsignal(*status & 0X7F));
 }

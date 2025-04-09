@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:20:03 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/07 10:23:47 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:20:10 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,21 @@ char	*pathcat(const char *path, const char *rel)
 	ft_strlcat(new, "/", len + 1);
 	ft_strlcat(new, rel, len + 1);
 	return (new);
+}
+
+int	open_pipe(t_parsed *cmd)
+{
+	int	pfds[2];
+
+	if (cmd->next)
+	{
+		if (pipe(pfds) == 0)
+		{
+			cmd->fds[1] = pfds[1];
+			cmd->next->fds[0] = pfds[0];
+		}
+		else
+			return (1);
+	}
+	return (0);
 }

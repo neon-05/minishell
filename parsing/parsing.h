@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/17 15:39:23 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:39:11 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,9 @@
 
 //====================(DEFINES)=============================//
 
-//0 	Successful exit without errors
-//1 	One or more generic errors encountered upon exit
-//2 	Incorrect usage, such as invalid options or missing arguments
-//126 	Command found but is not executable
-//127 	Command not found, usually the result of a missing directory in $PATH variable
-//128+N 	Command encountered fatal error (was forcefully terminated manually or from an outside source). The N tells us which signal was received (see example below)
-//130 	Command terminated with signal 2 (SIGINT) (ctrl+c on keyboard). 128+2
-//143 	Command terminated with signal 15 (SIGTERM) (kill command). 128+15
-
 //====================(STRUCTS)=============================//
-//
-typedef struct s_parsed
-{
-	char			**split;
-	char			*infile;
-	char			*outfile;
-	int				out_mode;
-	struct s_parsed	*next;
-}	t_parsed;
+
+typedef struct s_parsed t_parsed;
 
 //====================(DECLARATIONS)========================//
 
@@ -66,7 +50,7 @@ int			limiter(char *limiter);
 t_parsed	*parse(char **envp, char *rl, int *code);
 int			is_problem_char(char *str);
 char		**handle_env(char **envp, char **split, int *code);
-char		*replace_var(char *str, char *path);
+char		*replace_var(char *str, char *path, int *code);
 
 //parser_utils
 char		*trimm(char *split);

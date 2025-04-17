@@ -6,32 +6,42 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/17 14:44:21 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:40:37 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*replace_var(char *str, char *path)
+char	*replace_var(char *str, char *path, int *code)
 {
-	char	*n;
+	char	*new;
+	char	*nb;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
+	nb = NULL;
 	while (str[i] && str[i - 1] != '$')
 		i++;
 	while (str[i + j] && str[i + j] != ' ' && ft_isalpha(str[i + j]))
 		j++;
-	n = ft_calloc(1, sizeof(char) * (ft_strlen(str) - j + ft_strlen(path) + 1));
-	if (!n)
+	new = ft_calloc(1, sizeof(char) * (ft_strlen(str) - j + ft_strlen(path) + 1));
+	if (!new)
 		return (NULL);
-	ft_strlcat(n, str, i);
-	ft_strlcat_mod(n, path, ft_strlen(path) + 1);
-	ft_strlcat_mod(n, str + i + j, ft_strlen(str + i + j));
-	n[ft_strlen(str) - j + ft_strlen(path) + 1] = '\0';
-	return (n);
+	ft_strlcat(new, str, i);
+	if (str[i] == '?')
+	{
+		j++;
+		nb = ft_itoa(*code);
+		ft_strlcat_mod(new, nb, ft_strlen(nb) + 1);//check
+		free(nb);
+	}
+	else
+		ft_strlcat_mod(new, path, ft_strlen(path) + 1);//check
+	ft_strlcat_mod(new, str + i + j, ft_strlen(str + i + j));//check
+	new[ft_strlen(str) - j + ft_strlen(path) + 1] = '\0';
+	return (new);
 }
 
 int	is_problem_char(char *str)
@@ -62,9 +72,9 @@ char	**handle_env(char **envp, char **split, int *code)
 				break ;
 			path = get_envp(envp, ft_strchr(split[i], '$') + 1);
 			if (!path)
-				temp = replace_var(split[i], "");
+				temp = replace_var(split[i], "", code);
 			else
-				temp = replace_var(split[i], path + 1);
+				temp = replace_var(split[i], path + 1, code);
 			if (!temp)
 				return (ft_free_arr(split, arr_size(split)), NULL);
 			free(split[i]);

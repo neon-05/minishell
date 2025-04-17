@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/04 16:39:17 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:27:45 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**full_join_sign(char **split)
 	return (split);
 }
 
-char	**tokenize(char *rl)
+char	**tokenize(char *rl, int *code)
 {
 	char	**split;
 	int		i;
@@ -93,6 +93,7 @@ char	**tokenize(char *rl)
 	{
 		if (ft_strncmp(split[i], "|", 2) == 0 && split[i + 1] && ft_strncmp(split[i + 1], "|", 2) == 0)
 		{
+			*code = 2;
 			printf("bash: syntax error near unexpected token `%c'\n", (split[i][0])); // pas le bon fd (c'est grave chef?)
 			return (ft_free_arr(split, arr_size(split)),  NULL);
 		}

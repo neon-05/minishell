@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/04 17:20:35 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:48:56 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,19 @@ int	check_follow(char **split, char *c)
 	return (1);
 }
 
-int	quote_gnl(char **split, int	n)
+int	quote_gnl(char **split, int n)
 {
-//	char	*temp;
 	int		count_s;
 	int		count_d;
 	int		i;
 
 	i = arr_size(split) - 1;
-	if (ft_strnstr(split[i], "", 1))
-		return(1);
+	if (ft_strlen(split[i]) == 0)
+		return (1);
 	count_s = count_occ(split[i], '\'');
 	count_d = count_occ(split[i], '\"');
-	if (split[i] && (count_d % n != 0 && split[i][0] == '\"' && split[i][ft_strlen(split[i])] != '\"'))
+	if (split[i] && (count_d % n != 0 && split[i][0] == '\"' \
+		&& split[i][ft_strlen(split[i])] != '\"'))
 	{
 		printf(RED "[ツ] Unclosed quote !\n" RESET);
 		printf("We closed it with: %c\n", '"');
@@ -103,7 +103,8 @@ int	quote_gnl(char **split, int	n)
 		if (!split[i])
 			return (0);
 	}
-	if (split[i] && (count_s % n != 0 && split[i][0] == '\'' && split[i][ft_strlen(split[i])] != '\''))
+	if (split[i] && (count_s % n != 0 && split[i][0] == '\'' \
+		&& split[i][ft_strlen(split[i])] != '\''))
 	{
 		printf(RED "[ツ] Unclosed quote !\n" RESET);
 		printf("We closed it with: %c\n", '\'');
@@ -111,24 +112,6 @@ int	quote_gnl(char **split, int	n)
 		if (!split[i])
 			return (0);
 	}
-/*	{
-	temp = ft_strdup("");//check
-		while(ft_strchr(temp, split[i][0]) == 0)
-		{
-			free(temp);
-			temp = readline("");// attention au signal Ctrl-D
-			temp = ft_strjoin_f(temp, "\\n");//
-			if (!temp)//free
-				return (0);
-			split[i] = ft_strjoin_f(split[i], temp);
-			if (!split[i])
-				return (0);
-		}
-		free(temp);
-		temp = split[i];
-		split[i] = ft_strtrim(split[i], "\\n");
-		free(temp);
-	}*/
 	return (1);
 }
 
@@ -145,7 +128,11 @@ int	check_closed(char **split, int n)
 	{
 		count_s = count_occ(split[i], '\'');
 		count_d = count_occ(split[i], '\"');
-		if (split[i] && split[i + 1] && ((count_s % n != 0 && split[i][0] == '\'' && split[i][ft_strlen(split[i])] != '\'') || (count_d % n != 0 && split[i][0] == '\"' && split[i][ft_strlen(split[i])] != '\"')))
+		if (split[i] && split[i + 1] && ((count_s % n != 0 \
+			&& split[i][0] == '\'' \
+			&& split[i][ft_strlen(split[i])] != '\'') \
+			|| (count_d % n != 0 && split[i][0] == '\"' \
+			&& split[i][ft_strlen(split[i])] != '\"')))
 		{
 			split[i] = ft_strjoin_f(split[i], split[i + 1]);
 			if (!split[i])

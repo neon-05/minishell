@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 13:43:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/03/26 16:21:02 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/13 11:44:29 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	show_arr(char **arr)
 void	show_t_parsed(t_parsed *parsed)
 {
 	t_parsed	*temp;
-	temp = parsed;
-	int	i;
+	int			i;
 
+	temp = parsed;
 	i = 0;
 	while (temp)
 	{

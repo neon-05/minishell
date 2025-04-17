@@ -6,11 +6,11 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 19:33:16 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/03 16:16:21 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/13 11:43:56 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "parsing.h"
+#include "parsing.h"
 
 void	clean_node(t_parsed *parsed)
 {
@@ -18,7 +18,7 @@ void	clean_node(t_parsed *parsed)
 
 	i = 0;
 	if (!parsed)
-		return;
+		return ;
 	while (parsed->split && parsed->split[i])
 		free(parsed->split[i++]);
 	free(parsed->split[i]);

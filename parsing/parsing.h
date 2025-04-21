@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/17 17:39:11 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 00:52:28 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,21 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "../lib_utils/libft/libft.h"
+# include "../libft/libft.h"
 # include "../prompt/colors.h"
 
 //====================(DEFINES)=============================//
 
 //====================(STRUCTS)=============================//
 
-typedef struct s_parsed t_parsed;
+typedef struct s_parsed
+{
+	char			**split;
+	char			*infile;
+	char			*outfile;
+	int				out_mode;
+	struct s_parsed	*next;
+}	t_parsed;
 
 //====================(DECLARATIONS)========================//
 

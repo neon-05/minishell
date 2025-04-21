@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/17 17:40:37 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:11:54 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ char	*replace_var(char *str, char *path, int *code)
 	{
 		j++;
 		nb = ft_itoa(*code);
-		ft_strlcat_mod(new, nb, ft_strlen(nb) + 1);//check
+		ft_strlcat_mod(new, nb, ft_strlen(nb) + 1);
 		free(nb);
 	}
 	else
-		ft_strlcat_mod(new, path, ft_strlen(path) + 1);//check
-	ft_strlcat_mod(new, str + i + j, ft_strlen(str + i + j));//check
+		ft_strlcat_mod(new, path, ft_strlen(path) + 1);
+	ft_strlcat_mod(new, str + i + j, ft_strlen(str + i + j));
 	new[ft_strlen(str) - j + ft_strlen(path) + 1] = '\0';
 	return (new);
 }

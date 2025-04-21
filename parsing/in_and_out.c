@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:15:05 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/17 14:28:20 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 00:54:09 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**in(t_parsed *node, char **split, int *code)
 			{
 				if (!split[i])
 				{
-					*code  = 2;
+					*code = 2;
 					printf("Syntax error near unexpected token `newline'");
 				}
 				return (free_chain(node), NULL);
@@ -43,7 +43,7 @@ char	**in(t_parsed *node, char **split, int *code)
 			{
 				if (!split[i])
 				{
-					*code  = 2;
+					*code = 2;
 					printf("Syntax error near unexpected token `newline'");
 				}
 				return (free_chain(node), NULL);
@@ -69,7 +69,7 @@ char	**out(t_parsed *node, char **split, int *code)
 			{
 				if (!split[i])
 				{
-					*code  = 2;
+					*code = 2;
 					printf("Syntax error near unexpected token `newline'");
 				}
 				node->outfile = ft_strdup("/dev/null");
@@ -91,7 +91,7 @@ char	**out(t_parsed *node, char **split, int *code)
 			{
 				if (!split[i])
 				{
-					*code  = 2;
+					*code = 2;
 					printf("Syntax error near unexpected token `newline'");
 				}
 				node->outfile = ft_strdup("/dev/null");

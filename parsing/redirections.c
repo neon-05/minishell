@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 11:00:31 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/17 15:16:19 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:14:09 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ char	**triple(char **split, int *code, int i)
 	split[i] = trimm(split[i]);
 	if (!split[i])
 		return (ft_free_arr(split, arr_size(split)), NULL);
-	write(fd, split[i], ft_strlen(split[i])); //check
+	write(fd, split[i], ft_strlen(split[i]));
 	close(fd);
 	free(split[i]);
-	split	[i] = ft_strdup(".this_is_a_temporary_file_for_the_eof");
+	split [i] = ft_strdup(".this_is_a_temporary_file_for_the_eof");
 	if (!split[i])
 		return (ft_free_arr(split, arr_size(split)), NULL);
 	return (split);

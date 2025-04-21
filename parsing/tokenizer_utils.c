@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/17 13:48:56 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:15:12 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ char	**list_insert(char **lst1, char **lst2, int n)
 	while (lst1[n + 1])
 	{
 		new[j + i++] = ft_strdup(lst1[n + 1]);//check
-		free(lst1[n+1]);
+		free (lst1[n+1]);
 		n++;
 	}
 	free(lst1[n + 1]);

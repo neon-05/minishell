@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:41:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/17 15:37:15 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 00:51:03 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <readline/history.h>
 # include "prompt/colors.h"
 # include "parsing/parsing.h"
-# include "42_libft/libft.h"
+# include "libft/libft.h"
 
 //====================(DEFINES)=============================//
 

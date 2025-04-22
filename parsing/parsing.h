@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 16:12:21 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:57:33 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ void		show_t_parsed(t_parsed *parsed);
 int			remove_in_out(t_parsed *head, int *code);
 char		**in(t_parsed *node, char **split, int *code);
 char		**out(t_parsed *node, char **split, int *code);
+
+//in
+char		**in_one(t_parsed *node, char **split, int *code, int i);
+char		**in_two(t_parsed *node, char **split, int *code, int i);
+
+//out
+char		**out_one(t_parsed *node, char **split, int *code, int i);
+char		**out_two(t_parsed *node, char **split, int *code, int i);
 
 //limiter
 int			get_line(char **line);

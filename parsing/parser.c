@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 16:14:01 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:28:22 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ char	**handle_env(char **envp, char **split, int *code)
 	path = NULL;
 	while (split[++i])
 	{
-		while (split[i] && split[i][0] != '\'' && ft_strchr(split[i], '$') && (ft_strchr(split[i], '$') + 1)[0] != '\0' && (ft_strchr(split[i], '$') + 1)[0] != ' ')
+		while (split[i] && split[i][0] != '\'' && ft_strchr(split[i], '$') \
+			&& (ft_strchr(split[i], '$') + 1)[0] != '\0' \
+			&& (ft_strchr(split[i], '$') + 1)[0] != ' ')
 		{
 			if (ft_strnstr(split[i], "<<", 3) \
 					&& !ft_strnstr(split[i], "<<<", 4))

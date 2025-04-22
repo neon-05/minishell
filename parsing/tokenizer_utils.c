@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 03:31:31 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:46:28 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,16 @@ int	check_follow(char **split, char *c)
 	return (1);
 }
 
+int	closing_quote(char **split, char *str, int i)
+{
+	printf(RED "[ツ] Unclosed quote !\n" RESET);
+	printf("We closed it with: %c\n", str[0]);
+	split[i] = ft_strjoin_f(split[i], str);
+	if (!split[i])
+		return (0);
+	return (1);
+}
+
 int	quote_gnl(char **split, int n)
 {
 	int		count_s;
@@ -97,19 +107,13 @@ int	quote_gnl(char **split, int n)
 	if (split && split[i] && (count_d % n != 0 && split[i][0] == '\"' \
 		&& split[i][ft_strlen(split[i])] != '\"'))
 	{
-		printf(RED "[ツ] Unclosed quote !\n" RESET);
-		printf("We closed it with: %c\n", '"');
-		split[i] = ft_strjoin_f(split[i], "\"");
-		if (!split[i])
+		if (!closing_quote(split, "\"", i))
 			return (0);
 	}
 	if (split && split[i] && (count_s % n != 0 && split[i][0] == '\'' \
 		&& split[i][ft_strlen(split[i])] != '\''))
 	{
-		printf(RED "[ツ] Unclosed quote !\n" RESET);
-		printf("We closed it with: %c\n", '\'');
-		split[i] = ft_strjoin_f(split[i], "'");
-		if (!split[i])
+		if (!closing_quote(split, "'", i))
 			return (0);
 	}
 	return (1);
@@ -179,7 +183,7 @@ char	**list_insert(char **lst1, char **lst2, int n)
 	while (lst1[n + 1])
 	{
 		new[j + i++] = ft_strdup(lst1[n + 1]);//check
-		free (lst1[n+1]);
+		free (lst1[n + 1]);
 		n++;
 	}
 	free(lst1[n + 1]);

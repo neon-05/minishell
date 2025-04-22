@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 03:12:33 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:14:01 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,3 @@ t_parsed	*parse(char **envp, char *rl, int *code)
 	show_t_parsed(parsed);
 	return (parsed);
 }
-
-//WARNING  "echo \$HOME"	>>	"$HOME"

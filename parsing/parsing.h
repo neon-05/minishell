@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 00:52:28 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 16:12:21 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char		*trimm(char *split);
 //redirections
 char		**handle_redirections(char **split, int *code);
 char		**two(char **split, int *code, int i);
-char		**triple(char **split, int *code, int i);
 
 //struct
 t_parsed	*struct_maker(char **split, int *code);

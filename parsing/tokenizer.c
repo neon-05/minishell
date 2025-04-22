@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 01:39:24 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:06:52 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,18 @@ char	**full_join_sign(char **split)
 	return (split);
 }
 
+void	remove_spaces(char **split)
+{
+	int	i;
+
+	i = -1;
+	while (split[++i])
+	{
+		if (ft_strncmp(split[i], " ", 2) == 0)
+			duck_fishing(split, i--);
+	}
+}
+
 char	**tokenize(char *rl, int *code)
 {
 	char	**split;
@@ -83,12 +95,7 @@ char	**tokenize(char *rl, int *code)
 	split = full_join_sign(split);
 	if (!split)
 		return (NULL);
-	while (split[++i])
-	{
-		if (ft_strncmp(split[i], " ", 2) == 0)
-			duck_fishing(split, i--);
-	}
-	i = -1;
+	remove_spaces(split);
 	while (split[++i])
 	{
 		if (ft_strncmp(split[i], "|", 2) == 0 && split[i + 1] \
@@ -100,17 +107,5 @@ char	**tokenize(char *rl, int *code)
 			return (ft_free_arr(split, arr_size(split)), NULL);
 		}
 	}
-/*	i = -1;
-	while (split[++i])
-	{
-		if (ft_strncmp(split[i], "$", 2) == 0 && split[i + 1] \
-			&& ft_strncmp(split[i + 1], "?", 2) == 0)
-		{
-			split[i] = ft_strjoin_f(split[i], split[i + 1]);
-			if (!split[i])
-				return (ft_free_arr(split, arr_size(split)), NULL);
-			duck_fishing(split, i + 1);
-		}
-	}*/
 	return (split);
 }

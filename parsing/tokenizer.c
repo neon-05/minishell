@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 01:10:31 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 01:39:24 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	**tokenize(char *rl, int *code)
 			return (ft_free_arr(split, arr_size(split)), NULL);
 		}
 	}
-	i = -1;
+/*	i = -1;
 	while (split[++i])
 	{
 		if (ft_strncmp(split[i], "$", 2) == 0 && split[i + 1] \
@@ -111,6 +111,6 @@ char	**tokenize(char *rl, int *code)
 				return (ft_free_arr(split, arr_size(split)), NULL);
 			duck_fishing(split, i + 1);
 		}
-	}
+	}*/
 	return (split);
 }

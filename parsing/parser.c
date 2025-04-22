@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 01:11:54 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 03:12:33 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*replace_var(char *str, char *path, int *code)
 		ft_strlcat_mod(new, nb, ft_strlen(nb) + 1);
 		free(nb);
 	}
+	else if (str[i] == '\0')
+		ft_strlcat_mod(new, "$", 2);
 	else
 		ft_strlcat_mod(new, path, ft_strlen(path) + 1);
 	ft_strlcat_mod(new, str + i + j, ft_strlen(str + i + j));
@@ -65,7 +67,7 @@ char	**handle_env(char **envp, char **split, int *code)
 	path = NULL;
 	while (split[++i])
 	{
-		while (split[i] && split[i][0] != '\'' && count_occ(split[i], '$') != 0)
+		while (split[i] && split[i][0] != '\'' && ft_strchr(split[i], '$') && (ft_strchr(split[i], '$') + 1)[0] != '\0' && (ft_strchr(split[i], '$') + 1)[0] != ' ')
 		{
 			if (ft_strnstr(split[i], "<<", 3) \
 					&& !ft_strnstr(split[i], "<<<", 4))

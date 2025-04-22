@@ -6,7 +6,7 @@
 #    By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/09 00:28:46 by malapoug          #+#    #+#              #
-#    Updated: 2025/04/22 00:50:03 by malapoug         ###   ########.fr        #
+#    Updated: 2025/04/22 01:33:06 by malapoug         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,12 +60,10 @@ debug: $(OBJS)
 
 clean:
 	@make clean -C libft/
-	@make clean -C lib_utils/libft/
 	@$(RM) $(OBJS)
 
 fclean: clean
 	@make fclean -C libft/
-	@make clean -C lib_utils/libft/
 	@$(RM) $(NAME)
 
 re: fclean all

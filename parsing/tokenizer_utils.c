@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 17:35:36 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 01:15:12 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 03:31:31 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ int	quote_gnl(char **split, int n)
 	int		i;
 
 	i = arr_size(split) - 1;
-	if (ft_strlen(split[i]) == 0)
+	if (split && ft_strlen(split[i]) == 0)
 		return (1);
 	count_s = count_occ(split[i], '\'');
 	count_d = count_occ(split[i], '\"');
-	if (split[i] && (count_d % n != 0 && split[i][0] == '\"' \
+	if (split && split[i] && (count_d % n != 0 && split[i][0] == '\"' \
 		&& split[i][ft_strlen(split[i])] != '\"'))
 	{
 		printf(RED "[ツ] Unclosed quote !\n" RESET);
@@ -103,7 +103,7 @@ int	quote_gnl(char **split, int n)
 		if (!split[i])
 			return (0);
 	}
-	if (split[i] && (count_s % n != 0 && split[i][0] == '\'' \
+	if (split && split[i] && (count_s % n != 0 && split[i][0] == '\'' \
 		&& split[i][ft_strlen(split[i])] != '\''))
 	{
 		printf(RED "[ツ] Unclosed quote !\n" RESET);
@@ -143,7 +143,7 @@ int	check_closed(char **split, int n)
 		else
 			i++;
 	}
-	if (!quote_gnl(split, n))
+	if (split[0] && !quote_gnl(split, n))
 		return (0);
 	return (1);
 }

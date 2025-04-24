@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:41:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 00:51:03 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:00:35 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char	*get_path(char **envp, char *cmd);
 
 //lib_utils
 char	*ft_strjoin_f(char *dst, char *src);
-void	ft_free_arr(char **arr, int i);
-void	ft_free_arr_i(int **arr, int i);
+int		ft_free_arr(char **arr, int i);
+int		ft_free_arr_i(int **arr, int i);
 int		arr_size(char **arr);
 int		arr_size_i(int **arr);
 char	**ft_split_let(char const *s, char c);

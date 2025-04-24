@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/24 16:50:28 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:57:53 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_parsed
 //====================(DECLARATIONS)========================//
 
 //clean
-void		free_chain(t_parsed *head);
 void		free_chain(t_parsed *head);
 
 //debug
@@ -86,6 +85,9 @@ char		**tokenize(char *rl, int *code);
 
 //tokenizer_utils
 char		**split_insert_arr(char ***split, int c);
+
+//list_insert
+char		**list_insert(char **lst1, char **lst2, int n);
 
 //tokenizer_utils
 char		**list_insert(char **lst1, char **lst2, int n);

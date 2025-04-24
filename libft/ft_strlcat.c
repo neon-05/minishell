@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:36:48 by malapoug          #+#    #+#             */
-/*   Updated: 2025/01/21 18:54:33 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/22 22:51:34 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ size_t	ft_strlcat_mod(char *dst, const char *src, size_t size)
 	size_t	s_d;
 	size_t	s_s;
 
+	if (!dst)
+		return (0);
 	(void)size;
 	s_d = ft_strlen(dst);
 	s_s = ft_strlen((char *)src);

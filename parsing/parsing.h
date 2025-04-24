@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/22 17:57:33 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:50:28 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,14 @@ int			limiter(char *limiter);
 //parser
 t_parsed	*parse(char **envp, char *rl, int *code);
 int			is_problem_char(char *str);
-char		**handle_env(char **envp, char **split, int *code);
+char		**handle_env(char **envp, char **split, int *code, int i);
 char		*replace_var(char *str, char *path, int *code);
 
 //parser_utils
+t_parsed	*trimm_struct(t_parsed *parsed);
+int			uh(char *newW, int *code);
+int			find_money(char *str);
+int			is_problem_char(char *str);
 char		*trimm(char *split);
 
 //redirections

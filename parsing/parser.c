@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/24 16:50:00 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:21:45 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ t_parsed	*parse(char **envp, char *rl, int *code)
 	parsed = struct_maker(split, code);
 	if (!parsed)
 		return (NULL);
-	show_t_parsed(parsed);
 	parsed = trimm_struct(parsed);
 	show_t_parsed(parsed);
 	return (parsed);

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 11:00:31 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/24 19:18:38 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:40:50 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,13 @@ char	**handle_redirections(char **split, int *code)
 	i = -1;
 	while (split[++i])
 	{
-		if (ft_strnstr(split[i], "<<<", 4))
+		if (ft_strnstr(split[i], "<<<", 4) \
+			|| ft_strnstr(split[i], ">>>", 4))
 		{
-			printf("Syntax error near unexpected token `<'\n");
-			*code = 2;
-			ft_free_arr(split, arr_size(split));
-			return (NULL);
-		}
-		else if (ft_strnstr(split[i], ">>>", 4))
-		{
-			printf("Syntax error near unexpected token `>'\n");
+			if (ft_strnstr(split[i], "<<<", 4))
+				printf("Syntax error near unexpected token `<'\n");
+			else if (ft_strnstr(split[i], ">>>", 4))
+				printf("Syntax error near unexpected token `>'\n");
 			*code = 2;
 			ft_free_arr(split, arr_size(split));
 			return (NULL);

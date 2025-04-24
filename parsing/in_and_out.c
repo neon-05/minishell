@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:15:05 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/24 18:57:24 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:36:58 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**out(t_parsed *node, char **split, int *code)
 	i = -1;
 	while (split && split[++i])
 	{
-		if (ft_strnstr(split[i], ">", 2))
+		if (ft_strnstr(split[i], ">", 2) && split[i][1] != '>')
 		{
 			if (!out_one(node, split, code, i))
 				return (NULL);

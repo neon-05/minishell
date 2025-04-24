@@ -6,7 +6,7 @@
 #    By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/09 00:28:46 by malapoug          #+#    #+#              #
-#    Updated: 2025/04/24 17:20:46 by malapoug         ###   ########.fr        #
+#    Updated: 2025/04/24 18:39:31 by malapoug         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS_PARSING = parser.c\
 	parser_utils.c\
 	tokenizer.c\
 	tokenizer_utils.c\
+	tokenizer_utils2.c\
 	limiter.c\
 	redirections.c\
 	debug.c\

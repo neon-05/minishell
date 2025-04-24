@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/24 17:57:53 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:39:51 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ char		**tokenize(char *rl, int *code);
 
 //tokenizer_utils
 char		**split_insert_arr(char ***split, int c);
+
+//tokenizer_utils
+void		duck_fishing(char **split, int i);
+int			count_occ(char *str, int c);
+int			total_occ(char **split, int c);
 
 //list_insert
 char		**list_insert(char **lst1, char **lst2, int n);

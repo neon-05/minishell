@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:15:54 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/24 18:31:07 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:37:20 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,11 @@ int	boucle_3(char **lst1, char **new, int *i, int j)
 	return (1);
 }
 
-
-
-
-/*
-int	boucle_3(char **lst1, char **new, int n, int *i, int j)
+void	ft_free_double(char **lst1, char **lst2)
 {
-	while (lst1[n + 1])
-	{
-		new[j + (*i)++] = ft_strdup(lst1[n + 1]);
-		n++;
-		if (!new[*i])
-		{
-			new[*i] = NULL;
-			ft_free_arr(new, arr_size(new));
-			free(new);
-			return (0);
-		}
-	}
-	return (1);
+	ft_free_arr(lst1, arr_size(lst1));
+	ft_free_arr(lst2, arr_size(lst2));
 }
-*/
 
 char	**list_insert(char **lst1, char **lst2, int n)
 {
@@ -102,16 +86,12 @@ char	**list_insert(char **lst1, char **lst2, int n)
 	i = -1;
 	j = -1;
 	if (!boucle_1(lst1, new, n, &i))
-		return (ft_free_arr(lst1, arr_size(lst1)), \
-			ft_free_arr(lst2, arr_size(lst2)), NULL);
+		return (ft_free_double(lst1, lst2), NULL);
 	if (!boucle_2(lst2, new, i, &j))
-		return (ft_free_arr(lst1, arr_size(lst1)), \
-			ft_free_arr(lst2, arr_size(lst2)), NULL);
+		return (ft_free_double(lst1, lst2), NULL);
 	if (!boucle_3(lst1 + n, new, &i, j))
-		return (ft_free_arr(lst1, arr_size(lst1)), \
-			ft_free_arr(lst2, arr_size(lst2)), NULL);
+		return (ft_free_double(lst1, lst2), NULL);
 	new[i + j] = NULL;
-	ft_free_arr(lst1, arr_size(lst1));
-	ft_free_arr(lst2, arr_size(lst2));
+	ft_free_double(lst1, lst2);
 	return (new);
 }

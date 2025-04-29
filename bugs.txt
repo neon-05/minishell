@@ -135,8 +135,47 @@ exit status - 0								<=== Do work...
 |___/\___/_|_|_\___|  \_/\__,_|_| /__(_|_|_)
 
 
+<$$$> $F
+
+NODE 0 :
+
+INFILE:
+(null)
+
+OUTFILE:
+(null)
 
 
+OUT_MODE:
+0
+
+
+STR:
+
+
+
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==633792==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x5906de9c23fc bp 0x7ffc8541ef10 sp 0x7ffc8541ef00 T0)
+==633792==The signal is caused by a READ memory access.
+==633792==Hint: address points to the zero page.
+    #0 0x5906de9c23fc in ft_putstr_fd (/home/l/42/minishell/msh+0x63fc) (BuildId: 2ce8a811be84a780a64826fddf0781cc84b83e62)
+    #1 0x5906de9c0adb in print_error_msg exec/exec_utils_2.c:17
+    #2 0x5906de9c07d5 in exe_pipeline exec/exec.c:95
+    #3 0x5906de9bd3c3 in main_loop /home/l/42/minishell/main.c:78
+    #4 0x5906de9bd4a3 in main /home/l/42/minishell/main.c:98
+    #5 0x720037e2ce07  (/usr/lib/libc.so.6+0x25e07) (BuildId: aed3a2b0cf4e6cc12296052529af22f6a450a75a)
+    #6 0x720037e2cecb in __libc_start_main (/usr/lib/libc.so.6+0x25ecb) (BuildId: aed3a2b0cf4e6cc12296052529af22f6a450a75a)
+    #7 0x5906de9bd1e4 in _start (/home/l/42/minishell/msh+0x11e4) (BuildId: 2ce8a811be84a780a64826fddf0781cc84b83e62)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV (/home/l/42/minishell/msh+0x63fc) (BuildId: 2ce8a811be84a780a64826fddf0781cc84b83e62) in ft_putstr_fd
+==633792==ABORTING
+
+
+============
+Some more
+============
 
 ┌─[l]~[/home/l/42/minishell]~o
 └─O $HOME

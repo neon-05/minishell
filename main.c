@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:24:35 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/29 15:51:18 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:00:26 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	sa(int sig)
 {
 	char	*pr;
 
-	pr = "\033[34m<$$$> \033[0m";
+	pr = "\033[34m\n<$$$> \033[0m";
 	if (sig == 3)
 		ft_putstr_fd("\t", 1);
 	else
@@ -92,7 +92,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	signal(SIGINT, sa);
 	signal(SIGQUIT, sa);
-	pr = "\033[34m<$$$> \033[0m";
+	pr = "\033[34m\n<$$$> \033[0m";
 	while (envp)
 	{
 		if (main_loop(pr, &status, &envp))

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:19:03 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/28 16:14:22 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:39:48 by malapoug         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
-# include "../prompt/colors.h"
 
 //====================(DEFINES)=============================//
 

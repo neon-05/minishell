@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:20:03 by ylabussi          #+#    #+#             */
-/*   Updated: 2025/04/28 18:08:50 by ylabussi         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:37:56 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*find_exe(char *cmd, char **envp)
 		return (ft_strdup(cmd));
 	pathvar = getvar("PATH", envp);
 	if (!pathvar)
-		return (ft_putendl_fd("$PATH var not found", STDERR_FILENO), NULL);
+		return (NULL);
 	paths = ft_split(pathvar, ':');
 	if (!paths)
 		return (NULL);
@@ -84,4 +84,30 @@ t_parsed	*getlast(t_parsed	*node)
 		return (getlast(node->next));
 	else
 		return (node);
+}
+
+/* mode can be 'f', 'x', 'd' */
+int	path_check(char *path, char mode, char *str)
+{
+	struct stat	sb;
+
+	if (!path || access(path, F_OK))
+		return (print_prefix(MSH_NAME, str, MSG_NOT_FOUND, STDERR_FILENO),
+			EXIT_NOT_FOUND);
+	else if (mode == 'x' && access(path, X_OK))
+		return (print_prefix(MSH_NAME, str, MSG_PERM, STDERR_FILENO),
+			EXIT_PERMISSION);
+	if (stat(path, &sb))
+		return (-1);
+	else if (mode == 'f' && S_ISDIR(sb.st_mode))
+		return (print_prefix(MSH_NAME, str, MSG_DIR, STDERR_FILENO),
+			EXIT_PERMISSION);
+	else if (mode == 'x' && S_ISDIR(sb.st_mode))
+		return (print_prefix(MSH_NAME, str, MSG_MISSING_ARG, STDERR_FILENO),
+			EXIT_PERMISSION);
+	else if (mode == 'd' && !S_ISDIR(sb.st_mode))
+		return (print_prefix(MSH_NAME, str, MSG_NOT_DIR, STDERR_FILENO),
+			EXIT_PERMISSION);
+	else
+		return (0);
 }

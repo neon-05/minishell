@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:41:26 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/29 15:39:42 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:40:11 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@
 //====================(DEFINES)=============================//
 
 # define HIST_SIZE	100
-# define METACHARSET "<>|?*[]$\\(){}\"'`&;=! "
+# define METACHARSET "<>|?*[]$\\(){}\"'`&;=! +"
 # define TMP_FILE ".msh_tmp"
+# define PROMPT "\033[34m\n<$$$> \033[0m"
+# define MSH_NAME "./minishell: "
 
 //====================(STRUCTS)=============================//
 
 //====================(DECLARATIONS)========================//
-
-//prompt
-char	*prompt(void);
 
 //envp
 int		check11(char *temp, char *path);
@@ -63,5 +62,9 @@ int		arr_size(char **arr);
 int		arr_size_i(int **arr);
 char	**ft_split_let(char const *s, char c);
 char	**ft_arrdup(char **arr);
+size_t	arrlen(void **a);
+
+
+void	print_prefix(char *prefix, char *str, char *suffix, int fd);
 
 #endif

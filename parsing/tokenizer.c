@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   tokenizer.c                                         :+:    :+:           */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 12:06:44 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/25 18:05:34 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:29:12 by l              ########   odam.nl        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ char	**full_split(char *rl)
 {
 	char	**split;
 
-	split = ft_split_let(rl, '"');
+	split = ft_split_let(rl, ' ');
 	if (!split)
 		return (NULL);
-	split = split_insert_arr(&split, ' ');
+	split = split_insert_arr(&split, '"');
 	if (!split)
 		return (ft_free_arr(split, arr_size(split)), NULL);
 	split = split_insert_arr(&split, '\'');
@@ -71,14 +71,14 @@ char	**full_join_sign(char **split)
 	return (split);
 }
 
-void	remove_spaces(char **split)
+void	remove_spaces(char **split, char *c)
 {
 	int	i;
 
 	i = -1;
 	while (split[++i])
 	{
-		if (ft_strncmp(split[i], " ", 2) == 0)
+		if (ft_strncmp(split[i], c, 2) == 0)
 			duck_fishing(split, i--);
 	}
 }
@@ -95,11 +95,11 @@ char	**tokenize(char *rl, int *code)
 	split = full_join_sign(split);
 	if (!split)
 		return (NULL);
-	remove_spaces(split);
+	split = join_export(split);
 	while (split[++i])
 	{
-		if (ft_strncmp(split[i], "|", 2) == 0 \
-			&& (!split[i + 1] || ft_strncmp(split[i + 1], "|", 2) == 0))
+		if (ft_strncmp(split[i], "|", 2) == 0\
+			&& (!split[i + 1] || (split[i][0] == '|' && i == 0) || ft_strncmp(split[i + 1], "|", 2) == 0))
 		{
 			*code = 2;
 			printf("bash: syntax error near unexpected token `%c'\n", \

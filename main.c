@@ -6,77 +6,49 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 22:24:35 by malapoug          #+#    #+#             */
-/*   Updated: 2025/04/29 16:43:39 by malapoug         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:24:00 by ylabussi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-int	main(int ac, char **av, char **envp)
+
+void	print_prefix(char *prefix, char *str, char *suffix, int fd)
 {
-	char	*rl;
-	char	*pr;
-	int		code;
-	t_parsed	*list;
-
-	(void)ac;
-	(void)av;
-	envp = ft_arrdup(envp);
-	rl = NULL;
-	code = 0;
-	pr = prompt(envp);
-	while (!ft_strnstr(rl, "exit", ft_strlen(rl)))
-	// voir comment faire avec exceve pour "exit"
-	{
-		if (rl)
-			free(rl);
-		rl = readline(pr);
-		list = parse(envp, rl, &code);
-		if (!list && code != 2)
-			break ;
-		if (code != 2)
-		{
-			//process(list);
-			free_chain(list);
-		}
-		free(pr);
-		pr = prompt(envp);
-	}
-	free(pr);
-	free(rl);
-	return (0);
-}*/
-
-//on vas reorganiser tkt pas mdr
+	if (prefix)
+		ft_putstr_fd(prefix, fd);
+	if (str)
+		ft_putstr_fd(str, fd);
+	if (suffix)
+		ft_putstr_fd(suffix, fd);
+}
 
 void	sa(int sig)
 {
-	char	*pr;
-
-	pr = "\033[34m\n<$$$> \033[0m";
-	if (sig == 3)
-		ft_putstr_fd("\t", 1);
-	else
-		ft_putstr_fd(pr, 1);
+	if (sig == SIGQUIT)
+		ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+	else if (sig == SIGINT)
+		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 	sig++;
 }
 
-int	main_loop(char *pr, int *status, char ***envp)
+int	main_loop(int *status, char ***envp)
 {
 	char		*rl;
 	t_parsed	*line;
 
-	rl = readline(pr);
+	rl = readline(PROMPT);
 	if (ft_strlen(rl) == 0)
 		return (free(rl), rl == NULL);
 	add_history(rl);
 	line = parse(*envp, rl, status);
 	if (!line && *status != 2)
 		return (free(rl), 1);
-	else if (line->split[0] && *status != 2)
+	else if (line && line->split[0])
 	{
+		signal(SIGQUIT, sa);
 		exe_pipeline(line, envp, status);
-		fprintf(stderr, "exit status - %i\n", *status); //a enlever (fprintf)
+		signal(SIGQUIT, SIG_IGN);
+		//fprintf(stderr, "exit status - %i\n", *status);
 		free_chain(line);
 	}
 	return (free(rl), 0);
@@ -85,21 +57,19 @@ int	main_loop(char *pr, int *status, char ***envp)
 int	main(int argc, char **argv, char **envp)
 {
 	int		status;
-	char	*pr;
 
 	envp = ft_arrdup(envp);
 	if (!envp)
 		return (1);
 	signal(SIGINT, sa);
-	signal(SIGQUIT, sa);
-	pr = "\033[34m\n<$$$> \033[0m";
+	signal(SIGQUIT, SIG_IGN);
 	while (envp)
 	{
-		if (main_loop(pr, &status, &envp))
+		if (main_loop(&status, &envp))
 			break ;
 	}
 	rl_clear_history();
-	exit (status);//penser a supprimer .this_is_a_temporary_file_for_the_eof
+	exit (status);
 	argc++;
 	argv++;
 }

@@ -6,7 +6,7 @@
 /*   By: malapoug <malapoug@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:29 by malapoug          #+#    #+#             */
-/*   Updated: 2025/05/07 15:33:43 by l              ########   odam.nl        */
+/*   Updated: 2025/05/08 19:03:28 by l              ########   odam.nl        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	find_money(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && ((str[i] == '$' && str[i + 1] && str[i + 1] != '$') || str[i] == ' ' \
-		|| str[i] == '"'))
+	while (str[i] && (str[i] != '$' || (str[i] == '$' && str[i - 1] && str[i - 1] != '$')))
 		i++;
 	return (i);
 }
@@ -57,6 +56,8 @@ char	*trimm(char *split)
 {
 	char	*temp;
 
+	if (!split)
+		return (NULL);
 	if (split[0] == '\'')
 	{
 		temp = ft_strtrim(split, "'");

@@ -6,7 +6,7 @@
 /*   By: ylabussi <ylabussi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:46:37 by malapoug          #+#    #+#             */
-/*   Updated: 2025/05/07 16:33:40 by l              ########   odam.nl        */
+/*   Updated: 2025/05/08 19:12:21 by l              ########   odam.nl        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ char	*replace_path(char *str, char *path, int i, int j)
 	if (!new)
 		return (NULL);
 	ft_strlcat(new, str, i);
-	if (str[i] == '\0' || str[i] == ' ' || str[i] == '"')
+	if (str[i + 1] == '\0' || str[i] == ' ' || str[i] == '"')
 		ft_strlcat_mod(new, "$", 2);
 	else
-		ft_strlcat(new, path, ft_strlen(path) + 1);
-	ft_strlcat_mod(new, str + i + j, ft_strlen(str + i + j));
+		ft_strlcat_mod(new, path, ft_strlen(path) + 1);
+	new = ft_strjoin_f(new, str + i + j);
 	return (new);
 }
 
@@ -40,15 +40,24 @@ char	*replace_var(char *str, char *path, int *code)
 	i = find_money(str);
 	while (str[i + j] && str[i + j] != ' ' && ft_isalpha(str[i + j]))
 		j++;
-	if (str[i] == '?')
+	if (str[i + 1] == '?')
 	{
-		new = uh(new, str, code, i);
+		new = uh(new, str, code, i + 1);
 		if (!new)
 			return (NULL);
 	}
 	else
 		new = replace_path(str, path, i, j);
 	return (new);
+}
+
+int	skip_ispaces_rev(char **split, int i)
+{
+	if (!split[i])
+		return (i);
+	while (i > 0 && split[i] && (split[i][0] && split[i][0] == ' ' && split[i][1] == '\0'))
+		i--;
+	return (i);
 }
 
 char	**handle_env(char **envp, char **split, int *code, int *i)
@@ -58,15 +67,15 @@ char	**handle_env(char **envp, char **split, int *code, int *i)
 
 	path = NULL;
 	while (split[*i] && ft_strchr(split[*i], '$') \
-		&& split[*i][find_money(split[*i])] != '\0' && (ft_strchr(split[*i], '$') - 1)[0] != '\'')
+		&& split[*i][find_money(split[*i])] != '\0' && split[*i][0] != '\'')
 	{
-		if (ft_strnstr(split[*i], "<<", 3))
+		if (!ft_strncmp(split[skip_ispaces_rev(split, (*i - 1))], "<<", 3))
 			break ;
-		path = getvar(split[*i] + find_money(split[*i]), envp);
-		if (!path || split[*i][find_money(split[*i])] == '$')
+		path = getvar(ft_strchr(split[*i], '$') + 1, envp);
+		if (!path || split[*i][find_money(split[*i]) + 1] == '$')
 			temp = replace_var(split[*i], "", code);
 		else
-			temp = replace_var(split[*i] + 1, path, code);
+			temp = replace_var(split[*i], path, code);
 		if (!temp)
 			return (ft_free_arr(split, arr_size(split)), NULL);
 		free(split[*i]);
